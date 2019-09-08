@@ -1,6 +1,6 @@
-public class Trucks {
+public class Truck {
     private int capacity;
-    public Trucks(int capacity){
+    public Truck(int capacity){
         this.capacity = capacity;
     }
 

@@ -1,7 +1,7 @@
 public class Nodes {
     private int MAX_CORD = 3;
     private int x, y, z;
-
+    private int demand = 0;
     public Nodes(int x, int y){
         this.x = x;
         this.y = y;
@@ -24,5 +24,13 @@ public class Nodes {
 
     public int getZ(){
         return this.z;
+    }
+
+    public int getDemand() {
+        return demand;
+    }
+
+    public void setDemand(int demand) {
+        this.demand = demand;
     }
 }
