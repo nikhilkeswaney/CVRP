@@ -7,6 +7,7 @@ public class CVRP {
     private static NodeManager nodeManager = null;
     private static TruckManager truckManager = null;
     private static int optimalValue = 0;
+    private static EgdeType egdeType;
     public static void main(String[] args) throws IOException {
         if(args.length < 1) {
             usage();
@@ -27,14 +28,26 @@ public class CVRP {
                 case "COMMENT":{
                     String[] truckNumber = currentLineSeperated[2].split(",");
                     truckManager = new TruckManager(Integer.parseInt(truckNumber[0].strip()));
-                    optimalValue = Integer.parseInt(currentLineSeperated[3].strip());
+                    optimalValue = Integer.parseInt(currentLineSeperated[3].strip().replace(")", ""));
                     break;
                 }
 
-//                case "EDGE_WEIGHT_TYPE":{
-//
-//                    break;
-//                }
+                case "EDGE_WEIGHT_TYPE":{
+                    String distanceType = currentLineSeperated[1].strip();
+                    if(distanceType.equals("EUC_2D") || distanceType.equals("EUC_3D")) {
+                        egdeType = EgdeType.Euclidean;
+                        nodeManager = new NodeManager(new Euclidean());
+                    }
+                    else if(distanceType.equals("MAN_2D") || distanceType.equals("MAN_3D")) {
+                        egdeType = EgdeType.Euclidean;
+                        nodeManager = new NodeManager(new Manhattan());
+                    }
+                    else if(distanceType.equals("MAX_2D") || distanceType.equals("MAX_3D")) {
+                        egdeType = EgdeType.Max;
+                        nodeManager = new NodeManager(new Max());
+                    }
+                    break;
+                }
             }
         }
 
@@ -45,6 +58,9 @@ public class CVRP {
         System.out.println("1. <dataset> The dataset you want to use");
     }
 
+    public static int getOptimalValue() {
+        return optimalValue;
+    }
 
     public TruckManager getTruckManager() {
         return truckManager;
