@@ -27,4 +27,5 @@ public class TruckManager {
     public void setTrucks(Truck[] trucks) {
         this.trucks = trucks;
     }
+
 }

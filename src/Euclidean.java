@@ -1,6 +1,6 @@
 public class Euclidean implements DistanceMetric{
     @Override
-    public int distance(Nodes from, Nodes to) {
+    public int distance(Node from, Node to) {
         return (int) Math.sqrt(
                 Math.pow(from.getX() - to.getX(), 2) +
                 Math.pow(from.getY() - to.getY(), 2) +

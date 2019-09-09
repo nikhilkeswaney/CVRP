@@ -1,3 +1,3 @@
 public interface DistanceMetric {
-    public int distance(Nodes from, Nodes to);
+    public int distance(Node from, Node to);
 }
