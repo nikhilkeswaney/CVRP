@@ -12,14 +12,22 @@ public class CVRP {
         }
 
         String dataSet = args[0];
+
         FileReader f = new FileReader(dataSet);
         f.readFile();
-        System.out.println("test");
+
+        SubsetFinder finder = new SubsetFinder();
+        Subset s = finder.finder(getNodeManager().getNodeSize() - 1, getTruckManager().getNumberOfTrucks());
+
+
+
+        System.out.println(s.toString());
     }
 
     public static TruckManager getTruckManager() {
         return truckManager;
     }
+
 
     public static void setTruckManager(TruckManager truckManager) {
         CVRP.truckManager = truckManager;

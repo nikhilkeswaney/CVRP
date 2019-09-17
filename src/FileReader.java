@@ -15,7 +15,7 @@ public class FileReader {
             String[] currentLineSeperated = currentLine.split(":");
             String tag = currentLineSeperated[0].strip();
             switch (tag){
-                case "COMMENT":{
+                case "COMMENT": {
                     String[] truckNumber = currentLineSeperated[2].split(",");
                     CVRP.setTruckManager(new TruckManager(Integer.parseInt(truckNumber[0].strip())));
                     CVRP.setOptimalValue(Integer.parseInt(currentLineSeperated[3].strip().replace(")", "")));
@@ -41,7 +41,12 @@ public class FileReader {
                     }
                     break;
                 }
-
+                case "CAPACITY":{
+                    int capacity = Integer.parseInt(currentLineSeperated[1].strip());
+                    CVRP.getTruckManager().initializeEachTruck(capacity);
+                    CVRP.getTruckManager().setCapacity(capacity);
+                    break;
+                }
                 case "NODE_COORD_SECTION":{
                     String[] nodesCordinates = getChunk(objReader, size);
                     CVRP.getNodeManager().createNodes(nodesCordinates);
@@ -62,6 +67,8 @@ public class FileReader {
             }
         }
 
+        CVRP.getNodeManager().setTruckManager(CVRP.getTruckManager());
+        CVRP.getTruckManager().setNodeManager(CVRP.getNodeManager());
     }
 
     public static String[] getChunk(BufferedReader objReader, int size) throws IOException {
