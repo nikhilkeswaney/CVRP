@@ -2,22 +2,28 @@ import java.util.HashMap;
 
 public class NodeManager {
 
-    Node[] nodes = null;
+    private Node[] nodes = null;
     private int size = 0;
     private TruckManager truckManager = null;
-    int[][] distanceBetweenNodes = null;
+    private int[][] distanceBetweenNodes = null;
     private int depot = 0;
     private DistanceMetric distanceMetric = null;
     private HashMap<Integer, Node> NodeRefrence = null;
+
     public NodeManager(DistanceMetric distanceMetric, int size){
         this.distanceMetric = distanceMetric;
         this.size = size;
         nodes = new Node[size];
+        distanceBetweenNodes = new int[size][size];
         this.NodeRefrence = new HashMap<Integer, Node>();
     }
 
     public DistanceMetric getDistanceMetric() {
         return distanceMetric;
+    }
+
+    public int getNodeDistance(int from, int to){
+        return this.distanceBetweenNodes[from][to];
     }
 
     public void createNodes(String[] cordinates){
@@ -27,6 +33,23 @@ public class NodeManager {
             int nodeX = Integer.parseInt(coord[1]);
             int nodeY = Integer.parseInt(coord[2]);
             nodes[nodeNumber - 1] = new Node(nodeX, nodeY);
+        }
+
+        calculateDistanceForAllNodes();
+    }
+
+    private void calculateDistanceForAllNodes() {
+        for (int i = 0; i < nodes.length; i++){
+            for (int j = 0; j <= i; j++){
+                if(i == j) {
+                    distanceBetweenNodes[i][j] = Integer.MAX_VALUE;
+                }
+                else {
+                    int distBetweenIAndJ = distanceMetric.distance(nodes[i], nodes[j]);
+                    distanceBetweenNodes[i][j] = distBetweenIAndJ;
+                    distanceBetweenNodes[j][i] = distBetweenIAndJ;
+                }
+            }
         }
     }
 

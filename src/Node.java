@@ -2,6 +2,7 @@ public class Node {
     private int MAX_CORD = 3;
     private int x, y, z;
     private int demand = 0;
+
     public Node(int x, int y){
         this.x = x;
         this.y = y;

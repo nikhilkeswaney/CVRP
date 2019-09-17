@@ -16,12 +16,11 @@ public class CVRP {
         FileReader f = new FileReader(dataSet);
         f.readFile();
 
-        SubsetFinder finder = new SubsetFinder();
-        Subset s = finder.finder(getNodeManager().getNodeSize() - 1, getTruckManager().getNumberOfTrucks());
+        ExactAlgorithm ea = new ExactAlgorithm();
+        ea.start();
+        System.out.println(ea.getBestRoutesForTrucks());
+        System.out.println(ea.getMinCost());
 
-
-
-        System.out.println(s.toString());
     }
 
     public static TruckManager getTruckManager() {
