@@ -15,11 +15,9 @@ public class CVRP {
 
         FileReader f = new FileReader(dataSet);
         f.readFile();
-
-        ExactAlgorithm ea = new ExactAlgorithm();
-        ea.start();
-        System.out.println(ea.getBestRoutesForTrucks());
-        System.out.println(ea.getMinCost());
+        ExactAlgorithm runner = ExactAlgorithm.getInstance();
+        runner.start();
+        runner.printBestRoutes();
 
     }
 

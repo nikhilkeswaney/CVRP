@@ -11,11 +11,15 @@ public class ExactAlgorithm {
 
     public void FindBestRoutesForTrucks(Subset candidateSets){
         TravelingSalesman tsp = new TravelingSalesman();
+        int i = 0;
+        TravelingSalesmanTuple routeCost;
+        ArrayList<ArrayList<Integer>> trucksPath;
         for(ArrayList<ArrayList<Integer>> candidateSet: candidateSets.getSubsets()){
             int totalCosForWholeRoute = 0;
-            ArrayList<ArrayList<Integer>> trucksPath = new ArrayList<>();
+            trucksPath = new ArrayList<>();
+            System.out.println(i);
             for (ArrayList<Integer> eachTruckRoute: candidateSet) {
-                TravelingSalesmanTuple routeCost = tsp.tspMinCost(eachTruckRoute);
+                routeCost = tsp.tspMinCost(eachTruckRoute);
                 totalCosForWholeRoute += routeCost.getCost();
                 if (totalCosForWholeRoute > minCost){
                     break;
@@ -26,6 +30,7 @@ public class ExactAlgorithm {
                 minCost = totalCosForWholeRoute;
                 bestRoutesForTrucks = trucksPath;
             }
+            i++;
 
         }
     }
@@ -51,5 +56,16 @@ public class ExactAlgorithm {
 
     public void setBestRoutesForTrucks(ArrayList<ArrayList<Integer>> bestRoutesForTrucks) {
         this.bestRoutesForTrucks = bestRoutesForTrucks;
+    }
+
+    public static ExactAlgorithm getInstance(){
+        return new ExactAlgorithm();
+    }
+
+    public void printBestRoutes() {
+        System.out.println("Min Cost = " + getMinCost());
+        for(int i = 0; i < getBestRoutesForTrucks().size(); i++){
+            System.out.println("Truck " + (i + 1) + ":" + getBestRoutesForTrucks().get(i));
+        }
     }
 }
