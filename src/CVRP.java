@@ -15,9 +15,12 @@ public class CVRP {
 
         FileReader f = new FileReader(dataSet);
         f.readFile();
-        ExactAlgorithm runner = ExactAlgorithm.getInstance();
-        runner.start();
-        runner.printBestRoutes();
+//        ExactAlgorithm runner = ExactAlgorithm.getInstance();
+//        runner.start();
+//        runner.printBestRoutes();
+
+        BeeColony beeColony = new BeeColony();
+        beeColony.startCollectingFood();
 
     }
 

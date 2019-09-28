@@ -14,6 +14,10 @@ public class TruckManager {
         this.capacity = capacity;
     }
 
+    public int getCapacity(){
+        return this.capacity;
+    }
+
     public void initializeEachTruck(int capacity){
         for(int i = 0; i < getNumberOfTrucks(); i++){
             trucks[i] = new Truck(capacity);
