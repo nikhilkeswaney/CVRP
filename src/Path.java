@@ -7,6 +7,12 @@ public class Path {
     private int demand = 0;
     private NodeManager nodeManager = null;
     private TruckManager truckManager = null;
+
+    public Path(){
+        this.truckManager = CVRP.getTruckManager();
+        this.nodeManager = CVRP.getNodeManager();
+    }
+
     public Path(ArrayList<Integer> path){
         truckManager = CVRP.getTruckManager();
         nodeManager = CVRP.getNodeManager();
@@ -53,6 +59,11 @@ public class Path {
         return cost;
     }
 
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+
     public int getDemand() {
         return demand;
     }
@@ -70,5 +81,14 @@ public class Path {
         }
         sb.append("0");
         return sb.toString();
+    }
+
+    public Path deepCopy(){
+        Path copy = new Path();
+        copy.setPath(new ArrayList<>(getPath()));
+        copy.setDemand(getDemand());
+        copy.setValid(isValid());
+        copy.setCost(getCost());
+        return copy;
     }
 }

@@ -34,4 +34,8 @@ public class ScoutBee {
     public void setQueueSize(int queueSize) {
         this.queueSize = queueSize;
     }
+
+    public CandidateSet getFoodSource(){
+        return possibleFoodSourses.poll();
+    }
 }

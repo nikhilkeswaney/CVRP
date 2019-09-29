@@ -1,11 +1,16 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class CandidateSet {
     private Random rand = new Random();
     private int[] nodes = null;
     private Path[] pathsInCandidate = null;
-
+    public CandidateSet(Random rand, int[] nodes, Path[] pathsInCandidate){
+        this.rand = rand;
+        this.nodes = nodes;
+        this.pathsInCandidate = pathsInCandidate;
+    }
     public CandidateSet(int[] nodes) {
         TruckManager truckManager = CVRP.getTruckManager();
         NodeManager nodeManager = CVRP.getNodeManager();
@@ -82,5 +87,14 @@ public class CandidateSet {
                 sb.append("[").append(i.toString()).append("]");
         }
         return sb.toString();
+    }
+
+    public CandidateSet deepCopy(){
+        Path[] pathCopy = new Path[pathsInCandidate.length];
+        for(int i = 0; i < pathsInCandidate.length; i++){
+            Path pTemp = pathCopy[i].deepCopy();
+            pathCopy[i] = pTemp;
+        }
+        return new CandidateSet(rand, Arrays.copyOf(nodes, nodes.length), pathCopy);
     }
 }
