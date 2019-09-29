@@ -1,16 +1,26 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Random;
 
 public class CandidateSet {
     private Random rand = new Random();
     private int[] nodes = null;
     private Path[] pathsInCandidate = null;
-    public CandidateSet(Random rand, int[] nodes, Path[] pathsInCandidate){
+    private int nectarQuality;
+    private boolean valid;
+    private int costs;
+
+    public CandidateSet(Random rand, int[] nodes, Path[] pathsInCandidate,
+                        int costs, int nectarQuality){
         this.rand = rand;
         this.nodes = nodes;
         this.pathsInCandidate = pathsInCandidate;
+        this.valid = isValid();
+        this.costs = costs;
+        this.nectarQuality = nectarQuality;
     }
+
     public CandidateSet(int[] nodes) {
         TruckManager truckManager = CVRP.getTruckManager();
         NodeManager nodeManager = CVRP.getNodeManager();
@@ -20,6 +30,36 @@ public class CandidateSet {
             this.nodes = shuffle(nodes);
             feasible = sepearteToTrucks(truckManager, nodeManager);
         }
+        valid = isValid();
+    }
+
+    public void reCalculateCosts(){
+        this.costs = calculateCandidateCost();
+    }
+
+    public void reCalculatedemands(){
+
+    }
+
+    public int calculateCandidateCost(){
+        int cost = 0;
+        for(Path i: pathsInCandidate){
+            cost += i.calculateCost();
+        }
+        return cost;
+    }
+    public int calculateCapactiyConstraint(){
+        int cost = 0;
+        for(Path i: pathsInCandidate){
+            cost += i.calculatePathRequirements();
+        }
+        return cost;
+    }
+
+    public int calculateNectar(int index){
+        this.nectarQuality = calculateCandidateCost() +
+                index * BeeColony.getMaxItterations() * calculateCapactiyConstraint();
+        return this.nectarQuality;
     }
 
     private boolean sepearteToTrucks(TruckManager truckManager, NodeManager nodeManager) {
@@ -61,6 +101,87 @@ public class CandidateSet {
         array[j] = temp;
     }
 
+    public void swap() {
+        int first, second;
+        do{
+            first = rand.nextInt(pathsInCandidate.length);
+            second = rand.nextInt(pathsInCandidate.length);
+        }while (first == second);
+
+        pathsInCandidate[first].exchange(pathsInCandidate[second]);
+
+    }
+
+    public void BMX() {
+
+        int best = Integer.MAX_VALUE;
+        Path bestPath = null;
+        for (Path i: pathsInCandidate){
+            if(i.getCost() < best){
+                bestPath = i;
+                best = i.getCost();
+            }
+        }
+
+        assert bestPath != null;
+        createPathWithBMX(bestPath);
+
+    }
+
+    public void createPathWithBMX(Path bestPath){
+        NodeManager nodeManager = CVRP.getNodeManager();
+        TruckManager truckManager = CVRP.getTruckManager();
+        HashSet<Integer> setOfPath = new HashSet<>(bestPath.getPath());
+        ArrayList<Integer> path = new ArrayList<>();
+        int cost = 0, j = 1;
+        this.pathsInCandidate[0] = bestPath;
+        for(int i: nodes){
+            if(!setOfPath.contains(i)) {
+                if (
+                        (cost + nodeManager.getDemand(i) > truckManager.getCapacity()) &&
+                        (j != this.pathsInCandidate.length - 1)
+                ) {
+                    this.pathsInCandidate[j] = new Path(path);
+                    path = new ArrayList<Integer>();
+                    path.add(i);
+                    cost = nodeManager.getDemand(i);
+                    j++;
+                } else {
+                    path.add(i);
+                    cost += nodeManager.getDemand(i);
+                }
+            }
+        }
+        this.pathsInCandidate[j] = new Path(path);
+    }
+
+    public CandidateSet deepCopy(){
+        Path[] pathCopy = new Path[pathsInCandidate.length];
+        for(int i = 0; i < pathsInCandidate.length; i++){
+            Path pTemp = pathsInCandidate[i].deepCopy();
+            pathCopy[i] = pTemp;
+        }
+        return new CandidateSet(rand, Arrays.copyOf(nodes, nodes.length), pathCopy, costs, nectarQuality);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Path i: pathsInCandidate){
+            if(i == null)
+                sb.append("[null]");
+            else
+                sb.append("[").append(i.toString()).append("]");
+        }
+        return sb.toString();
+    }
+
+
+
+
+    /**
+     *  GETTERS AND SETTERS
+     */
     public Path[] getPathsInCandidate() {
         return pathsInCandidate;
     }
@@ -77,24 +198,39 @@ public class CandidateSet {
         this.nodes = nodes;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (Path i: pathsInCandidate){
-            if(i == null)
-                sb.append("[null]");
-            else
-                sb.append("[").append(i.toString()).append("]");
-        }
-        return sb.toString();
+    public int getNectarQuality() {
+        return nectarQuality;
     }
 
-    public CandidateSet deepCopy(){
-        Path[] pathCopy = new Path[pathsInCandidate.length];
-        for(int i = 0; i < pathsInCandidate.length; i++){
-            Path pTemp = pathCopy[i].deepCopy();
-            pathCopy[i] = pTemp;
+    public void setNectarQuality(int nectarQuality) {
+        this.nectarQuality = nectarQuality;
+    }
+
+    public boolean isValid() {
+        boolean validity = true;
+        for(Path i: pathsInCandidate){
+            validity = valid && i.isValid();
         }
-        return new CandidateSet(rand, Arrays.copyOf(nodes, nodes.length), pathCopy);
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
+    }
+
+    public CandidateSet findNeighbour(CandidateSet foodSource) {
+        CandidateSet newFoodSource = foodSource.deepCopy();
+        newFoodSource.swap();
+        newFoodSource.BMX();
+        newFoodSource.calculateNectar(BeeColony.currentIndex());
+        return newFoodSource;
+    }
+
+    public int getCosts() {
+        return costs;
+    }
+
+    public void setCosts(int costs) {
+        this.costs = costs;
     }
 }
