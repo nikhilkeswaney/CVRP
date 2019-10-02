@@ -68,7 +68,7 @@ public class NodeManager {
     }
 
     public int getDemand(int nodeNumber){
-        return nodes[nodeNumber - 1].getDemand();
+        return nodes[nodeNumber].getDemand();
     }
 
     public int getQuantityToDeliver(int nodeNumber){

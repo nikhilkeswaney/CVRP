@@ -30,16 +30,10 @@ public class CandidateSet {
             this.nodes = shuffle(nodes);
             feasible = sepearteToTrucks(truckManager, nodeManager);
         }
+        this.costs = calculateCandidateCost();
         valid = isValid();
     }
 
-    public void reCalculateCosts(){
-        this.costs = calculateCandidateCost();
-    }
-
-    public void reCalculatedemands(){
-
-    }
 
     public int calculateCandidateCost(){
         int cost = 0;
@@ -49,11 +43,11 @@ public class CandidateSet {
         return cost;
     }
     public int calculateCapactiyConstraint(){
-        int cost = 0;
+        int demandRequirement = 0;
         for(Path i: pathsInCandidate){
-            cost += i.calculatePathRequirements();
+            demandRequirement += i.calculatePathRequirements();
         }
-        return cost;
+        return demandRequirement;
     }
 
     public int calculateNectar(int index){
