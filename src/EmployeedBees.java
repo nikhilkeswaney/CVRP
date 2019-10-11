@@ -5,8 +5,9 @@ public class EmployeedBees {
     private boolean exhausted = false;
     private int trial = 0;
     private int bestCost;
+    private double roulleteSize;
     private static int TRIAL_MAX = 30;
-    private int[] range = new int[2];
+    private double[] range = new double[2];
     public EmployeedBees(ScoutBee scoutBee, int ID){
         this.foodSource = scoutBee.getFoodSource();
         this.bestNectar = foodSource.calculateNectar(BeeColony.currentIndex());
@@ -59,20 +60,18 @@ public class EmployeedBees {
         this.exhausted = exhausted;
     }
 
-    public int makeRannge(int start, int totalCost) {
-        int end = start + (int)(
-                            getBestCost() / (double) totalCost * 360
-        );
+    public double makeRange(double start, double totalCost) {
+        double end = start + getRoulleteSize() / (double) totalCost * 360;
         setRange(start, end);
         return end;
     }
 
-    public void setRange(int start, int end) {
+    public void setRange(double start, double end) {
         range[0] = start;
         range[1] = end;
 
     }
-    public int[] getRange(){
+    public double[] getRange(){
         return this.range;
     }
     public int getBestCost() {
@@ -87,15 +86,23 @@ public class EmployeedBees {
         return exhausted;
     }
 
-    public int getStart(){
+    public double getStart(){
         return range[0];
     }
 
-    public int getEnd(){
+    public double getEnd(){
         return range[1];
     }
 
     public boolean inRange(int number){
         return getStart() >= number && number < getEnd();
+    }
+
+    public void setRoulleteSize(int roulleteSize) {
+        this.roulleteSize = (double) 1 / getBestCost() * roulleteSize;
+    }
+
+    public double getRoulleteSize() {
+        return roulleteSize;
     }
 }

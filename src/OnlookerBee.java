@@ -13,6 +13,10 @@ public class OnlookerBee {
         }
     }
 
+    public void sendOnlookerBees(){
+        this.employeedBees.findGoodNeighbour();
+    }
+    
 
     public int roulleteSelection(){
         return rand.nextInt(360);
