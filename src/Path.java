@@ -90,7 +90,11 @@ public class Path {
      * GETTERS AND SETTERS
      */
     public boolean isValid() {
-        return valid;
+        int cap = 0;
+        for (int i: path){
+            cap += CVRP.getNodeManager().getDemand(i);
+        }
+        return cap <= CVRP.getTruckManager().getCapacity();
     }
 
     public void setValid(boolean valid) {

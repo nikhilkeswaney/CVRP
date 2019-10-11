@@ -8,7 +8,7 @@ public class CandidateSet {
     private int[] nodes = null;
     private Path[] pathsInCandidate = null;
     private int nectarQuality;
-    private boolean valid;
+    private boolean valid = true;
     private int costs;
 
     public CandidateSet(Random rand, int[] nodes, Path[] pathsInCandidate,
@@ -51,7 +51,8 @@ public class CandidateSet {
     }
 
     public int calculateNectar(int index){
-        this.nectarQuality = calculateCandidateCost() +
+        this.costs = calculateCandidateCost();
+        this.nectarQuality = this.costs +
                 index * BeeColony.getMaxItterations() * calculateCapactiyConstraint();
         return this.nectarQuality;
     }
@@ -205,7 +206,7 @@ public class CandidateSet {
         for(Path i: pathsInCandidate){
             validity = valid && i.isValid();
         }
-        return valid;
+        return validity;
     }
 
     public void setValid(boolean valid) {
@@ -214,8 +215,12 @@ public class CandidateSet {
 
     public CandidateSet findNeighbour(CandidateSet foodSource) {
         CandidateSet newFoodSource = foodSource.deepCopy();
-        newFoodSource.swap();
-        newFoodSource.BMX();
+        if (rand.nextBoolean()) {
+            newFoodSource.swap();
+        }
+        else {
+            newFoodSource.BMX();
+        }
         newFoodSource.calculateNectar(BeeColony.currentIndex());
         return newFoodSource;
     }
