@@ -10,11 +10,13 @@ public class ScoutBee {
         this.possibleFoodSourses = new LinkedList<>();
         this.queueSize = queueSize;
         initializeNode();
+        refillfoodSource();
+    }
+    public void refillfoodSource(){
         while (possibleFoodSourses.size() < queueSize){
             flyAndFindFoodSource();
         }
     }
-
     private synchronized void flyAndFindFoodSource(){
         CandidateSet c = new CandidateSet(nodes);
         possibleFoodSourses.add(c);
