@@ -7,12 +7,12 @@ public class CandidateSet {
     private Random rand = new Random();
     private int[] nodes = null;
     private Path[] pathsInCandidate = null;
-    private int nectarQuality;
+    private double nectarQuality;
     private boolean valid = true;
     private int costs;
 
     public CandidateSet(Random rand, int[] nodes, Path[] pathsInCandidate,
-                        int costs, int nectarQuality){
+                        int costs, double nectarQuality){
         this.rand = rand;
         this.nodes = nodes;
         this.pathsInCandidate = pathsInCandidate;
@@ -50,10 +50,9 @@ public class CandidateSet {
         return demandRequirement;
     }
 
-    public int calculateNectar(int index){
+    public double calculateNectar(int index){
         this.costs = calculateCandidateCost();
-        this.nectarQuality = this.costs +
-                index * BeeColony.getMaxItterations() * calculateCapactiyConstraint();
+        this.nectarQuality = 1 / (double) this.costs;
         return this.nectarQuality;
     }
 
@@ -193,7 +192,7 @@ public class CandidateSet {
         this.nodes = nodes;
     }
 
-    public int getNectarQuality() {
+    public double getNectarQuality() {
         return nectarQuality;
     }
 

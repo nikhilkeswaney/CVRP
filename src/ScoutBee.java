@@ -30,8 +30,13 @@ public class ScoutBee {
         }
     }
     public int getQueueSize() {
+        return possibleFoodSourses != null ? possibleFoodSourses.size(): 0;
+    }
+
+    public int getQueueMainSize(){
         return queueSize;
     }
+
 
     public void setQueueSize(int queueSize) {
         this.queueSize = queueSize;

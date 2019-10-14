@@ -1,16 +1,17 @@
 public class EmployeedBees {
     private int ID;
     private CandidateSet foodSource;
-    private int bestNectar;
+    private double bestNectar;
     private boolean exhausted = false;
     private int trial = 0;
     private int bestCost;
     private double roulleteSize;
-    private static int TRIAL_MAX = 90;
+    public static int TRIAL_MAX = 30;
     private double[] range = new double[2];
     public EmployeedBees(ScoutBee scoutBee, int ID){
         this.foodSource = scoutBee.getFoodSource();
         this.bestNectar = foodSource.calculateNectar(BeeColony.currentIndex());
+        this.bestCost = foodSource.getCosts();
         this.ID = ID;
     }
 
@@ -28,9 +29,10 @@ public class EmployeedBees {
         for(int i = 0; i < 6; i++) {
             newFoodSource = foodSource.findNeighbour(foodSource);
 
-            if(newFoodSource.getNectarQuality() < foodSource.getNectarQuality()){
+            if(newFoodSource.getNectarQuality() > foodSource.getNectarQuality()){
                 this.foodSource = newFoodSource;
                 this.bestNectar = newFoodSource.getNectarQuality();
+                this.bestCost = newFoodSource.getCosts();
                 trial = 0;
             }
             else
@@ -44,7 +46,7 @@ public class EmployeedBees {
 
     }
 
-    public int getBestNectar() {
+    public double getBestNectar() {
         return bestNectar;
     }
 

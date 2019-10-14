@@ -3,8 +3,9 @@ import java.util.Random;
 public class BeeColony {
     private ScoutBee scoutBee;
     private EmployeedBees[] employeedBees;
-    private static int MAX_ITTERATIONS = 100, INDEX = 1;
+    private static int MAX_ITTERATIONS = 1000, INDEX = 1;
     private int swarmSize = 70;
+    private int bestAns = Integer.MAX_VALUE;
     private OnlookerBee[] onlookerBees;
     public static synchronized int getMaxItterations() {
         return MAX_ITTERATIONS;
@@ -27,7 +28,7 @@ public class BeeColony {
         for (int i = 0; i < (int) swarmSize / 2; i++) {
             employeedBees[i] = new EmployeedBees(scoutBee, i + 1);
         }
-
+        EmployeedBees.TRIAL_MAX = (int) (0.5 * swarmSize * CVRP.getTruckManager().getNumberOfTrucks());
         while (currentIndex() < MAX_ITTERATIONS){
 
             int totalCost = 0;
@@ -53,11 +54,18 @@ public class BeeColony {
                 }
             }
             for (int i = 0; i < (int) swarmSize / 2; i++) {
+                if(employeedBees[i].getBestCost() == 0){
+                    System.out.println("");
+                }
+                if(employeedBees[i].getBestCost() < bestAns){
+                    bestAns = employeedBees[i].getBestCost();
+                }
                 System.out.println("best ans for " + (i + 1) + " = " + employeedBees[i].getBestCost());
             }
             System.out.println("--------------------------------------------");
             incrementIndex();
         }
+        System.out.println(bestAns);
 
 
 
