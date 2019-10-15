@@ -15,8 +15,14 @@ public class CVRP {
 
         FileReader f = new FileReader(dataSet);
         f.readFile();
-        BeeColony beeColony = new BeeColony();
-        beeColony.startCollectingFood();
+        ExactAlgorithm ea = new ExactAlgorithm();
+        double start = System.currentTimeMillis();
+        ea.start();
+        double end = System.currentTimeMillis();
+        ea.printBestRoutes();
+        System.out.println("Time Taken: " + (end - start) + " ms");
+//        BeeColony beeColony = new BeeColony();
+//        beeColony.startCollectingFood();
 
     }
 

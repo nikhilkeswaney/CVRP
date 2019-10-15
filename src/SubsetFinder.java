@@ -12,7 +12,7 @@ public class SubsetFinder {
         for (int i = 1; i <= n; i++){
             previous = current;
             current = new ArrayList<Subset>();
-            System.out.println(i);
+//            System.out.println(i);
             for (int j = 0; j <= i && j <= k; j++){
                 if(j == 0){
                     current.add(new Subset(j));
@@ -32,7 +32,7 @@ public class SubsetFinder {
                 }
             }
         }
-        System.out.println(current.get(current.size() - 1).getSubsets().size());
+//        System.out.println(current.get(current.size() - 1).getSubsets().size());
         return current.get(current.size() - 1);
     }
 }

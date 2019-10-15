@@ -32,7 +32,11 @@ class GFG{
     // Driver program
     public static void main(String[] args )
     {
-        System.out.println(countP(15, 8));
+        for(int i = 4; i < 14; i++) {
+            System.out.println("N = " + i + " | K = 4");
+            System.out.println("Number of subsets = " + countP(i, 4));
+            System.out.println("--------------------------------------------");
+        }
     }
 }
 
