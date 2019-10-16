@@ -63,3 +63,13 @@ Number of subsets = 611501
 N = 13 | K = 4
 Number of subsets = 2532530
 --------------------------------------------
+N = 10|| Time Taken: 5.0 ms
+N = 11|| Time Taken: 12.0 ms
+N = 12|| Time Taken: 29.0 ms
+N = 13|| Time Taken: 51.0 ms
+N = 14|| Time Taken: 146.0 ms
+N = 15|| Time Taken: 209.0 ms
+N = 16|| Time Taken: 238.0 ms
+N = 17|| Time Taken: 273.0 ms
+N = 18|| Time Taken: 5026.0 ms
+N = 19|| Time Taken: 8447.0 ms

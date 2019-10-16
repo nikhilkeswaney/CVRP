@@ -32,7 +32,7 @@ public class SubsetFinder {
                 }
             }
         }
-//        System.out.println(current.get(current.size() - 1).getSubsets().size());
+        System.out.println(current.get(current.size() - 1).getSubsets().size());
         return current.get(current.size() - 1);
     }
 }
