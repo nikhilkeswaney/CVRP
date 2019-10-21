@@ -73,6 +73,15 @@ public class EmployeedBees {
         range[1] = end;
 
     }
+
+    public void printTrucksandCost() {
+        int j = 1;
+        System.out.println("Cost: " + bestCost);
+        for (Path i: foodSource.getPathsInCandidate()){
+            System.out.println("Truck " + j + ": " + i.toString());
+        }
+    }
+
     public double[] getRange(){
         return this.range;
     }
@@ -107,4 +116,6 @@ public class EmployeedBees {
     public double getRoulleteSize() {
         return roulleteSize;
     }
+
+
 }

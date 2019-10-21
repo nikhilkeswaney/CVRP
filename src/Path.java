@@ -77,9 +77,9 @@ public class Path {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("0").append(" ");
+        sb.append("0").append("->");
         for (int i: path){
-            sb.append(i).append(" ");
+            sb.append(i).append("->");
         }
         sb.append("0");
         return sb.toString();

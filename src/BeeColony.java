@@ -5,6 +5,7 @@ public class BeeColony {
     private EmployeedBees[] employeedBees;
     private static int MAX_ITTERATIONS = 1000, INDEX = 1;
     private int swarmSize = 70;
+    private EmployeedBees bestSet;
     private int bestAns = Integer.MAX_VALUE;
     private OnlookerBee[] onlookerBees;
     public static synchronized int getMaxItterations() {
@@ -54,18 +55,14 @@ public class BeeColony {
                 }
             }
             for (int i = 0; i < (int) swarmSize / 2; i++) {
-                if(employeedBees[i].getBestCost() == 0){
-                    System.out.println("");
-                }
                 if(employeedBees[i].getBestCost() < bestAns){
                     bestAns = employeedBees[i].getBestCost();
+                    bestSet = employeedBees[i];
                 }
-                System.out.println("best ans for " + (i + 1) + " = " + employeedBees[i].getBestCost());
             }
-            System.out.println("--------------------------------------------");
             incrementIndex();
         }
-        System.out.println(bestAns);
+        bestSet.printTrucksandCost();
 
 
 

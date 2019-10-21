@@ -24,7 +24,8 @@ public class CVRP {
 //        BeeColony beeColony = new BeeColony();
 //        beeColony.startCollectingFood();
 
-        
+        BeeColony beeColony = new BeeColony();
+        beeColony.startCollectingFood();
 
 
     }

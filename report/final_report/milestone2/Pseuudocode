@@ -1,0 +1,108 @@
+
+Create a queue of all possible neighborhoods
+for each ScoutBee
+	- Fill the queue with possible candidate solutions
+
+while MAX_ITERATIONS is reached
+	for each EmployedBee
+		- Remove a candidate solution from the queue
+		while limit is reached
+			- Exploit the neighborhood for better solutions
+			- if new solution found is better than the previous solution
+				Save best answer
+
+
+	for each onlookerbee
+		- Select the employed bee using roulette wheel selection method
+		while limit is reached
+			- Exploit the neighborhood for better solutions
+			- if new solution found is better than the previous solution
+				Save best answer
+
+	If queue is empty
+		for each ScoutBee
+			- Fill the queue with possible candidate solutions
+
+	for each EmployedBee
+		- if neighborhood exhausted
+			replace it with a neighborhood from the queue
+
+
+
+
+\begin{algorithm}
+        \If{ not root}{\\
+            \KwRet{ TreeNode(key) }\\
+            }
+        \ElseIf{ key < root.val}{\\
+            root.left = self.insert(root.left, key) \\
+            }
+        \Else{ \\
+            root.right = self.insert(root.right, key) \\
+            }
+        root.height = 1 + max(self.getHeight(root.left), \\
+                           self.getHeight(root.right)) \\
+        balance = self.getBalance(root) \\
+        \If{ balance > 1 and key < root.left.val}{\\
+            \KwRet{ self.rightRotate(root) }
+            }
+        \If{ balance < -1 and key > root.right.val}{\\
+            \KwRet{ self.leftRotate(root) }
+            }
+        \If{ balance > 1 and key > root.left.val}{\\
+            root.left = self.leftRotate(root.left) \\
+            \KwRet{ self.rightRotate(root) }
+            }
+        \If{ balance < -1 and key < root.right.val}{\\
+            root.right = self.rightRotate(root.right) \\
+            \KwRet{ self.leftRotate(root) }
+            }
+        \KwRet{ root }
+
+\end{algorithm}
+
+
+
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwResult{The best answer found in all the iterations}
+Create a queue of all possible neighborhoods\;
+\For{each ScoutBee} {
+	Fill the queue with possible candidate solutions
+}
+\While{MAX_ITERATIONS is reached}{
+	\For{each EmployedBee}{
+	 	Remove a candidate solution from the queue\;
+		\While{limit is reached}{
+			Exploit the neighborhood for better solutions\;
+			\If{new solution found is better than the previous solution}{
+				Save best answer
+			}
+		}
+	}
+
+	\For{each onlookerbee}{
+		Select the employed bee using roulette wheel selection method\;
+		\While{limit is reached}{
+			Exploit the neighborhood for better solutions\;
+			\uIf{new solution found is better than the previous solution}{
+				Save best answer
+			}
+		}
+	}
+	\iIf{queue is empty}{
+		\For{each ScoutBee}{
+			Fill the queue with possible candidate solutions
+		}
+	}
+
+	\For{each EmployedBee}{
+		\uIf{neighborhood exhausted}{
+			replace it with a neighborhood from the queue
+		}
+	}
+
+}
+\KwRet{ Best ans found }\\
+\caption{Bee colony pseudo code}
+\end{algorithm}
