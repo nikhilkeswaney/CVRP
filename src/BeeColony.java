@@ -3,13 +3,16 @@ import java.util.Random;
 public class BeeColony {
     private ScoutBee scoutBee;
     private EmployeedBees[] employeedBees;
-    private static int MAX_ITTERATIONS = 1000, INDEX = 1;
+    private static int MAX_ITTERATIONS = 1500, INDEX = 1;
     private int swarmSize = 70;
     private EmployeedBees bestSet;
     private int bestAns = Integer.MAX_VALUE;
     private OnlookerBee[] onlookerBees;
     public static synchronized int getMaxItterations() {
         return MAX_ITTERATIONS;
+    }
+    public BeeColony(){
+        INDEX = 1;
     }
 
     public static int currentIndex() {
@@ -24,7 +27,7 @@ public class BeeColony {
         employeedBees = new EmployeedBees[swarmSize / 2];
         onlookerBees = new OnlookerBee[swarmSize / 2];
         scoutBee = new ScoutBee(swarmSize / 2);
-        System.out.println("Sending scout Bees to find possible food sources");
+//        System.out.println("Sending scout Bees to find possible food sources");
 
         for (int i = 0; i < (int) swarmSize / 2; i++) {
             employeedBees[i] = new EmployeedBees(scoutBee, i + 1);
@@ -62,12 +65,16 @@ public class BeeColony {
             }
             incrementIndex();
         }
-        bestSet.printTrucksandCost();
-
-
-
+//        printAns();
     }
 
+    public int bestCost(){
+        return bestSet.getBestCost();
+    }
+
+    public void printAns(){
+        bestSet.printTrucksandCost();
+    }
     public EmployeedBees[] getEmployeedBees() {
         return employeedBees;
     }

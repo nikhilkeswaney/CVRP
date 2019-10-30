@@ -18,16 +18,28 @@ public class CVRP {
 //        ExactAlgorithm ea = new ExactAlgorithm();
 //        double start = System.currentTimeMillis();
 //        ea.start();
-//        double end = System.currentTimeMillis();
 //        ea.printBestRoutes();
 //        System.out.println("N = " + CVRP.getNodeManager().getNodeSize() + "|| Time Taken: " + (end - start) + " ms");
 //        BeeColony beeColony = new BeeColony();
 //        beeColony.startCollectingFood();
 
-        BeeColony beeColony = new BeeColony();
-        beeColony.startCollectingFood();
-
-
+        int minCost = Integer.MAX_VALUE, maxTime = Integer.MIN_VALUE;
+        BeeColony beeColony;
+        int sum = 0;
+        System.out.println("N = " + getNodeManager().getSize());
+        for (int i = 0; i < 10; i++) {
+            double start = System.currentTimeMillis();
+            beeColony = new BeeColony();
+            beeColony.startCollectingFood();
+            double end = System.currentTimeMillis();
+            sum += beeColony.bestCost();
+            minCost = Math.min(beeColony.bestCost(), minCost);
+            maxTime = Math.max(maxTime, (int)(end - start));
+        }
+        System.out.println("Best ans: " + getOptimalValue());
+        System.out.println("Min cost:" + minCost);
+        System.out.println("Avg: " + sum / 10);
+        System.out.println("Time taken: " + maxTime);
     }
 
     public static TruckManager getTruckManager() {
