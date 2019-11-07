@@ -32,7 +32,6 @@ public class BeeColony {
             for (int i = 0; i < (int) swarmSize / 2; i++) {
                 onlookerBees[i] = new OnlookerBee(employeedBees, new Random());
                 onlookerBees[i].sendOnlookerBees();
-
             }
 
             if(scoutBee.getQueueSize() < swarmSize / 2){

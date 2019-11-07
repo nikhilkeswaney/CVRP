@@ -83,10 +83,11 @@ public class CandidateSet {
     }
 
     public int[] shuffle(int[] array) {
-        for (int i = 0; i < array.length; i++) {
-            swapAt(i, randRange(i, array.length), array);
+        int[] copyArray = Arrays.copyOf(array, array.length);
+        for (int i = 0; i < copyArray.length; i++) {
+            swapAt(i, randRange(i, copyArray.length), array);
         }
-        return array;
+        return copyArray;
     }
 
     private void swapAt(int i, int j, int[] array) {
