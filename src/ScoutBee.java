@@ -78,4 +78,10 @@ public class ScoutBee extends Task {
             }
         });
     }
+
+    public void checkAdRefill() {
+        if(getQueueSize() < queueSize){
+            refillfoodSource();
+        }
+    }
 }

@@ -1,4 +1,9 @@
-public class EmployeedBees {
+import edu.rit.pj2.Vbl;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
+public class EmployeedBees{
     private int ID;
     private CandidateSet foodSource;
     private double bestNectar;
@@ -8,6 +13,9 @@ public class EmployeedBees {
     private double roulleteSize;
     public static int TRIAL_MAX = 30;
     private double[] range = new double[2];
+
+    public EmployeedBees(){}
+
     public EmployeedBees(ScoutBee scoutBee, int ID){
         this.foodSource = scoutBee.getFoodSource();
         this.bestNectar = foodSource.calculateNectar(BeeColony.currentIndex());
@@ -15,14 +23,6 @@ public class EmployeedBees {
         this.ID = ID;
     }
 
-
-    public CandidateSet getFoodSource() {
-        return foodSource;
-    }
-
-    public void setFoodSource(CandidateSet foodSource) {
-        this.foodSource = foodSource;
-    }
 
     public void findGoodNeighbour() {
         CandidateSet newFoodSource;
@@ -82,13 +82,31 @@ public class EmployeedBees {
         }
     }
 
+
+    public void reduce(EmployeedBees copy){
+        if(copy.bestCost < this.bestCost) {
+            this.foodSource = copy.foodSource;
+            this.bestNectar = copy.bestNectar;
+            this.exhausted = copy.exhausted;
+            this.trial = copy.trial;
+            this.bestCost = copy.bestCost;
+            this.roulleteSize = copy.roulleteSize;
+            this.range = Arrays.copyOf(copy.range, copy.range.length);
+        }
+
+        else{
+            this.trial += copy.trial;
+        }
+    }
+
+
     public double[] getRange(){
         return this.range;
     }
+
     public int getBestCost() {
         return bestCost;
     }
-
     public void setBestCost(int bestCost) {
         this.bestCost = bestCost;
     }
@@ -117,5 +135,26 @@ public class EmployeedBees {
         return roulleteSize;
     }
 
+    public EmployeedBees deepCopy(){
+        EmployeedBees copy = new EmployeedBees();
+        copy.ID = this.ID;
+        copy.foodSource = this.foodSource.deepCopy();
+        copy.bestNectar = this.bestNectar;
+        copy.exhausted = this.exhausted;
+        copy.trial = this.trial;
+        copy.bestCost = this.bestCost;
+        copy.roulleteSize = this.roulleteSize;
+        copy.range = Arrays.copyOf(range, range.length);
 
+        return copy;
+    }
+
+
+    public CandidateSet getFoodSource() {
+        return foodSource;
+    }
+
+    public void setFoodSource(CandidateSet foodSource) {
+        this.foodSource = foodSource;
+    }
 }

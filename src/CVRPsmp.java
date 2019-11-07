@@ -20,6 +20,8 @@ public class CVRPsmp extends Task {
 
         BeeColonySmp beeSmp = new BeeColonySmp();
         beeSmp.main(args);
+        System.out.println("Best ans: " + getOptimalValue());
+        System.out.println("Min cost:" + beeSmp.bestCost());
 
     }
 

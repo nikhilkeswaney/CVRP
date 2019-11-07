@@ -19,6 +19,7 @@ public class FileReader {
                     String[] truckNumber = currentLineSeperated[2].split(",");
                     CVRP.setTruckManager(new TruckManager(Integer.parseInt(truckNumber[0].strip())));
                     CVRP.setOptimalValue(Integer.parseInt(currentLineSeperated[3].strip().replace(")", "")));
+                    CVRPsmp.setOptimalValue(Integer.parseInt(currentLineSeperated[3].strip().replace(")", "")));
                     break;
                 }
                 case "DIMENSION": {

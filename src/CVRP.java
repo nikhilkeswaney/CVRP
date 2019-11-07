@@ -1,11 +1,13 @@
+import edu.rit.pj2.Task;
+
 import java.io.IOException;
 
-public class CVRP {
+public class CVRP extends Task {
 
     private static NodeManager nodeManager = null;
     private static TruckManager truckManager = null;
     private static int optimalValue = 0;
-    public static void main(String[] args) throws IOException {
+    public void main(String[] args) throws Exception {
         if(args.length < 1) {
             usage();
             return;
@@ -15,33 +17,39 @@ public class CVRP {
 
         FileReader f = new FileReader(dataSet);
         f.readFile();
-        ExactAlgorithm ea = new ExactAlgorithm();
-        double start = System.currentTimeMillis();
-        ea.start();
-        ea.printBestRoutes();
-        double end = System.currentTimeMillis();
+//        ExactAlgorithm ea = new ExactAlgorithm();
+//        double start = System.currentTimeMillis();
+//        ea.start();
+//        ea.printBestRoutes();
+//        double end = System.currentTimeMillis();
+//
+//        System.out.println("N = " + CVRP.getNodeManager().getNodeSize() + "|| Time Taken: " + (end - start) + " ms");
+//        BeeColony beeColony = new BeeColony();
+//        beeColony.startCollectingFood();
 
-        System.out.println("N = " + CVRP.getNodeManager().getNodeSize() + "|| Time Taken: " + (end - start) + " ms");
-        BeeColony beeColony = new BeeColony();
-        beeColony.startCollectingFood();
+        int minCost = Integer.MAX_VALUE, maxTime = Integer.MIN_VALUE;
+        BeeColony beeColony;
+        int sum = 0;
+        System.out.println("N = " + getNodeManager().getSize());
+        for (int i = 0; i < 1; i++) {
+            double start = System.currentTimeMillis();
+            beeColony = new BeeColony();
+            beeColony.startCollectingFood();
+            double end = System.currentTimeMillis();
+            sum += beeColony.bestCost();
+            minCost = Math.min(beeColony.bestCost(), minCost);
+            maxTime = Math.max(maxTime, (int)(end - start));
+        }
+        System.out.println("Best ans: " + getOptimalValue());
+        System.out.println("Min cost:" + minCost);
+        System.out.println("Avg: " + sum / 10);
+        System.out.println("Time taken: " + maxTime);
 
-//        int minCost = Integer.MAX_VALUE, maxTime = Integer.MIN_VALUE;
-//        BeeColony beeColony;
-//        int sum = 0;
-//        System.out.println("N = " + getNodeManager().getSize());
-//        for (int i = 0; i < 1; i++) {
-//            double start = System.currentTimeMillis();
-//            beeColony = new BeeColony();
-//            beeColony.startCollectingFood();
-//            double end = System.currentTimeMillis();
-//            sum += beeColony.bestCost();
-//            minCost = Math.min(beeColony.bestCost(), minCost);
-//            maxTime = Math.max(maxTime, (int)(end - start));
-//        }
+
+//        BeeColonySmp beeSmp = new BeeColonySmp();
+//        beeSmp.main(args);
 //        System.out.println("Best ans: " + getOptimalValue());
-//        System.out.println("Min cost:" + minCost);
-//        System.out.println("Avg: " + sum / 10);
-//        System.out.println("Time taken: " + maxTime);
+//        System.out.println("Min cost:" + beeSmp.bestCost());
     }
 
     public static TruckManager getTruckManager() {

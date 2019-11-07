@@ -31,22 +31,22 @@ public class BeeColony {
             createRoulleteWheel(totalCost);
             for (int i = 0; i < (int) swarmSize / 2; i++) {
                 onlookerBees[i] = new OnlookerBee(employeedBees, new Random());
+
                 onlookerBees[i].sendOnlookerBees();
+
             }
 
-            if(scoutBee.getQueueSize() < swarmSize / 2){
-                scoutBee.refillfoodSource();
-            }
+            scoutBee.checkAdRefill();
 
-            for (int i = 0; i < (int) swarmSize / 2; i++) {
-                if (employeedBees[i].isExhausted()) {
-                    employeedBees[i] = new EmployeedBees(scoutBee, i + 1);
-                }
-            }
             for (int i = 0; i < (int) swarmSize / 2; i++) {
                 if(employeedBees[i].getBestCost() < bestAns){
                     bestAns = employeedBees[i].getBestCost();
                     bestSet = employeedBees[i];
+                }
+            }
+            for (int i = 0; i < (int) swarmSize / 2; i++) {
+                if (employeedBees[i].isExhausted()) {
+                    employeedBees[i] = new EmployeedBees(scoutBee, i + 1);
                 }
             }
             incrementIndex();
