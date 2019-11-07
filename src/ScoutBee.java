@@ -1,25 +1,29 @@
-import java.util.LinkedList;
-import java.util.Queue;
+import edu.rit.pj2.Loop;
+import edu.rit.pj2.Task;
+import edu.rit.util.Queue;
 
-public class ScoutBee {
+public class ScoutBee extends Task {
     private Queue<CandidateSet> possibleFoodSourses;
     private int queueSize = 0;
     private int[] nodes;
 
+    public ScoutBee(){}
+
     public ScoutBee(int queueSize){
-        this.possibleFoodSourses = new LinkedList<>();
+        this.possibleFoodSourses = new Queue<>();
         this.queueSize = queueSize;
         initializeNode();
         refillfoodSource();
     }
+
     public void refillfoodSource(){
         while (possibleFoodSourses.size() < queueSize){
             flyAndFindFoodSource();
         }
     }
-    private synchronized void flyAndFindFoodSource(){
+    private void flyAndFindFoodSource(){
         CandidateSet c = new CandidateSet(nodes);
-        possibleFoodSourses.add(c);
+        possibleFoodSourses.push(c);
     }
 
     private void initializeNode() {
@@ -43,6 +47,22 @@ public class ScoutBee {
     }
 
     public CandidateSet getFoodSource(){
-        return possibleFoodSourses.poll();
+        return possibleFoodSourses.pop();
+    }
+
+    public Queue<CandidateSet> getQueue(){
+        return possibleFoodSourses;
+    }
+    @Override
+    public void main(String[] strings) throws Exception {
+        this.possibleFoodSourses = new Queue<>();
+        this.queueSize = Integer.parseInt(strings[0]);
+        initializeNode();
+        parallelFor(0, queueSize).exec(new Loop() {
+            @Override
+            public void run(int i) throws Exception {
+                flyAndFindFoodSource();
+            }
+        });
     }
 }

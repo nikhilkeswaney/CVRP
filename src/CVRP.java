@@ -27,7 +27,7 @@ public class CVRP {
         BeeColony beeColony;
         int sum = 0;
         System.out.println("N = " + getNodeManager().getSize());
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
             double start = System.currentTimeMillis();
             beeColony = new BeeColony();
             beeColony.startCollectingFood();

@@ -8,26 +8,13 @@ public class BeeColony {
     private EmployeedBees bestSet;
     private int bestAns = Integer.MAX_VALUE;
     private OnlookerBee[] onlookerBees;
-    public static synchronized int getMaxItterations() {
-        return MAX_ITTERATIONS;
-    }
     public BeeColony(){
         INDEX = 1;
     }
-
-    public static int currentIndex() {
-        return INDEX;
-    }
-
-    public static void incrementIndex() {
-        INDEX++;
-    }
-
     public void startCollectingFood(){
         employeedBees = new EmployeedBees[swarmSize / 2];
         onlookerBees = new OnlookerBee[swarmSize / 2];
         scoutBee = new ScoutBee(swarmSize / 2);
-//        System.out.println("Sending scout Bees to find possible food sources");
 
         for (int i = 0; i < (int) swarmSize / 2; i++) {
             employeedBees[i] = new EmployeedBees(scoutBee, i + 1);
@@ -68,13 +55,6 @@ public class BeeColony {
 //        printAns();
     }
 
-    public int bestCost(){
-        return bestSet.getBestCost();
-    }
-
-    public void printAns(){
-        bestSet.printTrucksandCost();
-    }
     public EmployeedBees[] getEmployeedBees() {
         return employeedBees;
     }
@@ -94,4 +74,23 @@ public class BeeColony {
         }
     }
 
+    public static int currentIndex() {
+        return INDEX;
+    }
+
+    public static void incrementIndex() {
+        INDEX++;
+    }
+
+    public int bestCost(){
+        return bestSet.getBestCost();
+    }
+
+    public void printAns(){
+        bestSet.printTrucksandCost();
+    }
+
+    public static synchronized int getMaxItterations() {
+        return MAX_ITTERATIONS;
+    }
 }
