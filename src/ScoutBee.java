@@ -1,7 +1,6 @@
 import edu.rit.pj2.Loop;
 import edu.rit.pj2.Task;
 import edu.rit.util.Queue;
-
 import java.util.Arrays;
 
 public class ScoutBee extends Task {
@@ -12,7 +11,7 @@ public class ScoutBee extends Task {
     public ScoutBee(){}
 
     public ScoutBee(int queueSize){
-        this.possibleFoodSourses = new Queue<>();
+        this.possibleFoodSourses = new Queue<CandidateSet>();
         this.queueSize = queueSize;
         initializeNode();
         refillfoodSource();
@@ -61,6 +60,7 @@ public class ScoutBee extends Task {
     public Queue<CandidateSet> getQueue(){
         return possibleFoodSourses;
     }
+
     @Override
     public void main(String[] strings) throws Exception {
         this.possibleFoodSourses = new Queue<>();

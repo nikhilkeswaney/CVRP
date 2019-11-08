@@ -13,7 +13,7 @@ public class EmployeedBees{
     private double roulleteSize;
     public static int TRIAL_MAX = 30;
     private double[] range = new double[2];
-
+    boolean update = false;
     public EmployeedBees(){}
 
     public EmployeedBees(ScoutBee scoutBee, int ID){
@@ -85,6 +85,7 @@ public class EmployeedBees{
 
     public void reduce(EmployeedBees copy){
         if(copy.bestCost < this.bestCost) {
+            update = true;
             this.foodSource = copy.foodSource;
             this.bestNectar = copy.bestNectar;
             this.exhausted = copy.exhausted;
@@ -94,7 +95,7 @@ public class EmployeedBees{
             this.range = Arrays.copyOf(copy.range, copy.range.length);
         }
 
-        else{
+        if (!update){
             this.trial += copy.trial;
         }
     }

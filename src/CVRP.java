@@ -27,29 +27,26 @@ public class CVRP extends Task {
 //        BeeColony beeColony = new BeeColony();
 //        beeColony.startCollectingFood();
 
-        int minCost = Integer.MAX_VALUE, maxTime = Integer.MIN_VALUE;
-        BeeColony beeColony;
-        int sum = 0;
-        System.out.println("N = " + getNodeManager().getSize());
-        for (int i = 0; i < 1; i++) {
-            double start = System.currentTimeMillis();
+        int yes = Integer.parseInt(args[1]);
+        if(yes == 0) {
+            BeeColony beeColony;
             beeColony = new BeeColony();
             beeColony.startCollectingFood();
-            double end = System.currentTimeMillis();
-            sum += beeColony.bestCost();
-            minCost = Math.min(beeColony.bestCost(), minCost);
-            maxTime = Math.max(maxTime, (int)(end - start));
+
+            System.out.println("N = " + getNodeManager().getSize());
+            System.out.println("Best ans: " + getOptimalValue());
+            System.out.println("Min cost:" + beeColony.bestCost());
         }
-        System.out.println("Best ans: " + getOptimalValue());
-        System.out.println("Min cost:" + minCost);
-        System.out.println("Avg: " + sum / 10);
-        System.out.println("Time taken: " + maxTime);
+        else {
+            BeeColonySmp beeColony;
+            beeColony = new BeeColonySmp();
+            beeColony.main(args);
 
+            System.out.println("N = " + getNodeManager().getSize());
+            System.out.println("Best ans: " + getOptimalValue());
+            System.out.println("Min cost:" + beeColony.bestCost());
 
-//        BeeColonySmp beeSmp = new BeeColonySmp();
-//        beeSmp.main(args);
-//        System.out.println("Best ans: " + getOptimalValue());
-//        System.out.println("Min cost:" + beeSmp.bestCost());
+        }
     }
 
     public static TruckManager getTruckManager() {

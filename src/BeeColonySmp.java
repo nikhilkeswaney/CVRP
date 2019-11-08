@@ -8,8 +8,8 @@ import java.util.Random;
 public class BeeColonySmp extends Task {
     private ScoutBee scoutBee;
     private EmployeedBees[] employeedBees;
-    private static int MAX_ITTERATIONS = 2500, INDEX = 1;
-    private int swarmSize = 70;
+    private static int MAX_ITTERATIONS = 1500, INDEX = 1;
+    private int swarmSize = 2000;
     private EmployeedBees bestSet;
     private int bestAns = Integer.MAX_VALUE;
     private OnlookerBee[] onlookerBees;
@@ -28,8 +28,7 @@ public class BeeColonySmp extends Task {
         parallelFor(0, (int) (swarmSize / 2) - 1).exec(new Loop() {
             @Override
             public void run(int i) throws Exception {
-            employeedBees[i] = new EmployeedBees(scoutBee, i + 1);
-            int bestValue = employeedBees[i].getBestCost();
+                employeedBees[i] = new EmployeedBees(scoutBee, i + 1);
             }
         });
 
@@ -57,7 +56,6 @@ public class BeeColonySmp extends Task {
                 }
             });
 
-
             createRoulleteWheel(totalMaxCost.item);
 
             Random rand = new Random();
@@ -78,6 +76,7 @@ public class BeeColonySmp extends Task {
             scoutBee.checkAdRefill();
 
             for (int i = 0; i < (int) swarmSize / 2; i++) {
+                employeedBees[i].update = false;
                 if(employeedBees[i].getBestCost() < bestAns){
                     bestAns = employeedBees[i].getBestCost();
                     bestSet = employeedBees[i];
