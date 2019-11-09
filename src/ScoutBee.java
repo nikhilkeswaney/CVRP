@@ -1,9 +1,8 @@
 import edu.rit.pj2.Loop;
-import edu.rit.pj2.Task;
 import edu.rit.util.Queue;
 import java.util.Arrays;
 
-public class ScoutBee extends Task {
+public class ScoutBee {
     private Queue<CandidateSet> possibleFoodSourses;
     private int queueSize = 0;
     private int[] nodes;
@@ -61,23 +60,23 @@ public class ScoutBee extends Task {
         return possibleFoodSourses;
     }
 
-    @Override
-    public void main(String[] strings) throws Exception {
-        this.possibleFoodSourses = new Queue<>();
-        this.queueSize = Integer.parseInt(strings[0]);
-        initializeNode();
-        allFlyandFindFoodSource();
-    }
-
-    public void allFlyandFindFoodSource(){
-        parallelFor(0, queueSize).exec(new Loop() {
-            @Override
-            public void run(int i) throws Exception {
-                CandidateSet c = new CandidateSet(nodes);
-                possibleFoodSourses.push(c);
-            }
-        });
-    }
+//    @Override
+//    public void main(String[] strings) throws Exception {
+//        this.possibleFoodSourses = new Queue<>();
+//        this.queueSize = Integer.parseInt(strings[0]);
+//        initializeNode();
+//        allFlyandFindFoodSource();
+//    }
+//
+//    public void allFlyandFindFoodSource(){
+//        parallelFor(0, queueSize).exec(new Loop() {
+//            @Override
+//            public void run(int i) throws Exception {
+//                CandidateSet c = new CandidateSet(nodes);
+//                possibleFoodSourses.push(c);
+//            }
+//        });
+//    }
 
     public void checkAdRefill() {
         if(getQueueSize() < queueSize){

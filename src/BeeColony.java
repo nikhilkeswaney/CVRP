@@ -4,7 +4,7 @@ public class BeeColony {
     private ScoutBee scoutBee;
     private EmployeedBees[] employeedBees;
     private static int MAX_ITTERATIONS = 1500, INDEX = 1;
-    private int swarmSize = 2000;
+    private int swarmSize = 20000;
     private EmployeedBees bestSet;
     private int bestAns = Integer.MAX_VALUE;
     private OnlookerBee[] onlookerBees;
