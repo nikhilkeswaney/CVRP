@@ -14,7 +14,7 @@ public class CVRP extends Task {
     private ScoutBee scoutBee;
     private EmployeedBees[] employeedBees;
     private static int MAX_ITTERATIONS = 1500, INDEX = 1;
-    private int swarmSize = 2000;
+    private int swarmSize = 5000;
     private EmployeedBees bestSet;
     private int bestAns = Integer.MAX_VALUE;
     private OnlookerBee[] onlookerBees;
@@ -24,6 +24,7 @@ public class CVRP extends Task {
             return;
         }
 
+        swarmSize = Integer.parseInt(args[3]);
         String dataSet = args[0];
 
         FileReader f = new FileReader(dataSet);
@@ -125,7 +126,7 @@ public class CVRP extends Task {
 
                 incrementIndex();
             }
-
+            System.out.print("cores = " + args[2] + " ");
         }
     }
 

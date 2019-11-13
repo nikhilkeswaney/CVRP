@@ -1,0 +1,12 @@
+nohup java pj2 tracker=none cores=1 debug=makespan CVRP Dataset/E/E-n101-k14.vrp 1 1 &>> 1.out &
+nohup java pj2 tracker=none cores=2 debug=makespan CVRP Dataset/E/E-n101-k14.vrp 1 2 &>> 1.out &
+nohup java pj2 tracker=none cores=3 debug=makespan CVRP Dataset/E/E-n101-k14.vrp 1 3 &>> 1.out &
+nohup java pj2 tracker=none cores=4 debug=makespan CVRP Dataset/E/E-n101-k14.vrp 1 4 &>> 1.out &
+nohup java pj2 tracker=none cores=5 debug=makespan CVRP Dataset/E/E-n101-k14.vrp 1 5 &>> 1.out &
+nohup java pj2 tracker=none cores=6 debug=makespan CVRP Dataset/E/E-n101-k14.vrp 1 6 &>> 1.out &
+nohup java pj2 tracker=none cores=7 debug=makespan CVRP Dataset/E/E-n101-k14.vrp 1 7 &>> 1.out &
+nohup java pj2 tracker=none cores=8 debug=makespan CVRP Dataset/E/E-n101-k14.vrp 1 8 &>> 1.out &
+nohup java pj2 tracker=none cores=9 debug=makespan CVRP Dataset/E/E-n101-k14.vrp 1 9 &>> 1.out &
+nohup java pj2 tracker=none cores=10 debug=makespan CVRP Dataset/E/E-n101-k14.vrp 1 10 &>> 1.out &
+nohup java pj2 tracker=none cores=11 debug=makespan CVRP Dataset/E/E-n101-k14.vrp 1 11 &>> 1.out &
+nohup java pj2 tracker=none cores=12 debug=makespan CVRP Dataset/E/E-n101-k14.vrp 1 12 &>> 1.out &
