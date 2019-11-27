@@ -1,0 +1,176 @@
+cores = 1 
+N = 101
+Best ans: 1071
+Min cost:1477
+Job 1 makespan 361552 msec
+cores = 2
+N = 101
+Best ans: 1071
+Min cost:1471
+Job 1 makespan 431536 msec
+cores = 3
+N = 101
+Best ans: 1071
+Min cost:1411
+Job 1 makespan 476751 msec
+cores = 4
+N = 101
+Best ans: 1071
+Min cost:1410
+Job 1 makespan 513913 msec
+cores = 5
+N = 101
+Best ans: 1071
+Min cost:1414
+Job 1 makespan 540777 msec
+cores = 6
+N = 101
+Best ans: 1071
+Min cost:1353
+Job 1 makespan 569780 msec
+cores = 7
+N = 101
+Best ans: 1071
+Min cost:1393
+Job 1 makespan 588645 msec
+cores = 8
+N = 101
+Best ans: 1071
+Min cost:1365
+Job 1 makespan 613677 msec
+cores = 9
+N = 101
+Best ans: 1071
+Min cost:1333
+Job 1 makespan 633160 msec
+cores = 10
+N = 101
+Best ans: 1071
+Min cost:1312
+Job 1 makespan 639222 msec
+cores = 12
+N = 101
+Best ans: 1071
+Min cost:1331
+Job 1 makespan 658056 msec
+cores = 11
+N = 101
+Best ans: 1071
+Min cost:1342
+Job 1 makespan 658685 msec
+cores = 1
+N = 101
+Best ans: 1071
+Min cost:1541
+Job 1 makespan 353552 msec
+cores = 2
+N = 101
+Best ans: 1071
+Min cost:1480
+Job 1 makespan 446617 msec
+cores = 3
+N = 101
+Best ans: 1071
+Min cost:1434
+Job 1 makespan 482379 msec
+cores = 4
+N = 101
+Best ans: 1071
+Min cost:1372
+Job 1 makespan 508854 msec
+cores = 5
+N = 101
+Best ans: 1071
+Min cost:1384
+Job 1 makespan 539010 msec
+cores = 6
+N = 101
+Best ans: 1071
+Min cost:1405
+Job 1 makespan 584210 msec
+cores = 7
+N = 101
+Best ans: 1071
+Min cost:1391
+Job 1 makespan 596670 msec
+cores = 8
+N = 101
+Best ans: 1071
+Min cost:1355
+Job 1 makespan 612418 msec
+cores = 9
+N = 101
+Best ans: 1071
+Min cost:1362
+Job 1 makespan 632980 msec
+cores = 10
+N = 101
+Best ans: 1071
+Min cost:1349
+Job 1 makespan 640795 msec
+cores = 11
+N = 101
+Best ans: 1071
+Min cost:1335
+Job 1 makespan 650895 msec
+cores = 12
+N = 101
+Best ans: 1071
+Min cost:1335
+Job 1 makespan 652664 msec
+
+cores = 2
+N = 101
+Best ans: 1071
+Min cost:1453
+Job 1 makespan 428203 msec
+cores = 3
+N = 101
+Best ans: 1071
+Min cost:1475
+Job 1 makespan 489724 msec
+cores = 4
+N = 101
+Best ans: 1071
+Min cost:1382
+Job 1 makespan 521170 msec
+cores = 5
+N = 101
+Best ans: 1071
+Min cost:1424
+Job 1 makespan 557928 msec
+cores = 6
+N = 101
+Best ans: 1071
+Min cost:1387
+Job 1 makespan 583032 msec
+cores = 7
+N = 101
+Best ans: 1071
+Min cost:1358
+Job 1 makespan 601850 msec
+cores = 8
+N = 101
+Best ans: 1071
+Min cost:1373
+Job 1 makespan 625416 msec
+cores = 9
+N = 101
+Best ans: 1071
+Min cost:1373
+Job 1 makespan 637064 msec
+cores = 10
+N = 101
+Best ans: 1071
+Min cost:1368
+Job 1 makespan 658808 msec
+cores = 12
+N = 101
+Best ans: 1071
+Min cost:1325
+Job 1 makespan 668059 msec
+cores = 11
+N = 101
+Best ans: 1071
+Min cost:1338
+Job 1 makespan 668365 msec

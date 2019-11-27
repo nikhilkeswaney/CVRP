@@ -87,20 +87,27 @@ public class CVRP extends Task {
                 });
 
                 createRoulleteWheel(totalMaxCost.item);
+//
+//                Random rand = new Random();
+//
+//                // onlooker bee phase
+//                parallelFor(0, (int)(swarmSize / 2) - 1).exec(new Loop() {
+//                    @Override
+//                    public void run(int i) throws Exception {
+//                        onlookerBees[i] = new OnlookerBee(employeedBees, rand);
+//                        onlookerBees[i].sendAllOnlookerBees();
+//                    }
+//                });
+//
+//                for (OnlookerBee onlookerBee: onlookerBees){
+//                    onlookerBee.reduceCopy();
+//                }
 
-                Random rand = new Random();
+                for (int i = 0; i < (int) swarmSize / 2; i++) {
+                    onlookerBees[i] = new OnlookerBee(employeedBees, new Random());
 
-                // onlooker bee phase
-                parallelFor(0, (int)(swarmSize / 2) - 1).exec(new Loop() {
-                    @Override
-                    public void run(int i) throws Exception {
-                        onlookerBees[i] = new OnlookerBee(employeedBees, rand);
-                        onlookerBees[i].sendAllOnlookerBees();
-                    }
-                });
+                    onlookerBees[i].sendOnlookerBees();
 
-                for (OnlookerBee onlookerBee: onlookerBees){
-                    onlookerBee.reduceCopy();
                 }
 
                 scoutBee.checkAdRefill();
@@ -126,7 +133,10 @@ public class CVRP extends Task {
 
                 incrementIndex();
             }
-            System.out.print("cores = " + args[2] + " ");
+            System.out.println("cores = " + args[2] + " ");
+            System.out.println("N = " + getNodeManager().getSize());
+            System.out.println("Best ans: " + getOptimalValue());
+            System.out.println("Min cost:" + bestCost());
         }
     }
 
