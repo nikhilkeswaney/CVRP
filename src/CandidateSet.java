@@ -50,12 +50,16 @@ public class CandidateSet {
         return demandRequirement;
     }
 
+//    public double calculateNectar(int index){
+//        this.costs = calculateCandidateCost();
+//        this.nectarQuality = 1 / (double) this.costs;
+//        return this.nectarQuality;
+//    }
     public double calculateNectar(int index){
-        this.costs = calculateCandidateCost();
-        this.nectarQuality = 1 / (double) this.costs;
-        return this.nectarQuality;
-    }
-
+            this.costs = calculateCandidateCost();
+            return this.costs +
+                    BeeColony.currentIndex() * BeeColony.getMaxItterations() * calculateCapactiyConstraint();
+        }
     private boolean sepearteToTrucks(TruckManager truckManager, NodeManager nodeManager) {
         ArrayList<Integer> path = new ArrayList<>();
         int cost = 0, j = 0;

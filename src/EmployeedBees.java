@@ -29,9 +29,9 @@ public class EmployeedBees{
         for(int i = 0; i < 6; i++) {
             newFoodSource = foodSource.findNeighbour(foodSource);
 
-            if(newFoodSource.getNectarQuality() > foodSource.getNectarQuality()){
+            if(newFoodSource.calculateNectar(BeeColony.currentIndex()) < foodSource.calculateNectar(BeeColony.currentIndex())){
                 this.foodSource = newFoodSource;
-                this.bestNectar = newFoodSource.getNectarQuality();
+                this.bestNectar = newFoodSource.calculateNectar(BeeColony.currentIndex());
                 this.bestCost = newFoodSource.getCosts();
                 trial = 0;
             }
