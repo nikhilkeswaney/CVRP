@@ -52,10 +52,6 @@ public class NodeManager {
                 }
             }
         }
-
-//        for (int[] row: distanceBetweenNodes){
-//            System.out.println(Arrays.toString(row));
-//        }
     }
 
     public void setDemands(String[] demands){

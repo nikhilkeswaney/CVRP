@@ -17,7 +17,6 @@ public class ExactAlgorithm {
         for(ArrayList<ArrayList<Integer>> candidateSet: candidateSets.getSubsets()){
             int totalCosForWholeRoute = 0;
             trucksPath = new ArrayList<>();
-            System.out.println(i);
             for (ArrayList<Integer> eachTruckRoute: candidateSet) {
                 routeCost = tsp.tspMinCost(eachTruckRoute);
                 totalCosForWholeRoute += routeCost.getCost();

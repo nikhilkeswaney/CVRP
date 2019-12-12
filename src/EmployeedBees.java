@@ -79,6 +79,7 @@ public class EmployeedBees{
         System.out.println("Cost: " + bestCost);
         for (Path i: foodSource.getPathsInCandidate()){
             System.out.println("Truck " + j + ": " + i.toString());
+            j++;
         }
     }
 

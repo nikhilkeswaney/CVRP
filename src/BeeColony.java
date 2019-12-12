@@ -4,7 +4,9 @@ public class BeeColony {
     private ScoutBee scoutBee;
     private EmployeedBees[] employeedBees;
     private static int MAX_ITTERATIONS = 1500, INDEX = 1;
+
     private int swarmSize = 1000;
+
     private EmployeedBees bestSet;
     private int bestAns = Integer.MAX_VALUE;
     private OnlookerBee[] onlookerBees;
@@ -52,7 +54,6 @@ public class BeeColony {
             incrementIndex();
         }
     }
-
     public EmployeedBees[] getEmployeedBees() {
         return employeedBees;
     }
@@ -90,5 +91,9 @@ public class BeeColony {
 
     public static synchronized int getMaxItterations() {
         return MAX_ITTERATIONS;
+    }
+
+    public void setSwarmSize(int swarmSize) {
+        this.swarmSize = swarmSize;
     }
 }
