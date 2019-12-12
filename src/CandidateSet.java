@@ -1,3 +1,11 @@
+//******************************************************************************
+//
+//  File:    CandidateSet.java
+//  Author: Nikhil Haresh Keswaney
+//
+//  This file implements the candidate set for the Artificial bee colony
+//  algorithm
+//******************************************************************************
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -11,6 +19,14 @@ public class CandidateSet {
     private boolean valid = true;
     private int costs;
 
+    /**
+     * Constructor for object initialization
+     * @param rand Random number generator
+     * @param nodes nodes that are ther in candidate set
+     * @param pathsInCandidate paths in candidate
+     * @param costs cost of the candidate set
+     * @param nectarQuality nectar quality of candidate set
+     */
     public CandidateSet(Random rand, int[] nodes, Path[] pathsInCandidate,
                         int costs, double nectarQuality){
         this.rand = rand;
@@ -21,6 +37,10 @@ public class CandidateSet {
         this.nectarQuality = nectarQuality;
     }
 
+    /**
+     * Constructor for object initialization
+     * @param nodes nodes that are ther in candidate set
+     */
     public CandidateSet(int[] nodes) {
         TruckManager truckManager = CVRP.getTruckManager();
         NodeManager nodeManager = CVRP.getNodeManager();
@@ -34,7 +54,10 @@ public class CandidateSet {
         valid = isValid();
     }
 
-
+    /**
+     * This function is used to calculate the candidate cost
+     * @return total cost of the candidate set
+     */
     public int calculateCandidateCost(){
         int cost = 0;
         for(Path i: pathsInCandidate){
@@ -42,6 +65,11 @@ public class CandidateSet {
         }
         return cost;
     }
+
+    /**
+     * Calculate the constraint of the truck
+     * @return total items in candidate set
+     */
     public int calculateCapactiyConstraint(){
         int demandRequirement = 0;
         for(Path i: pathsInCandidate){
@@ -50,16 +78,23 @@ public class CandidateSet {
         return demandRequirement;
     }
 
-//    public double calculateNectar(int index){
-//        this.costs = calculateCandidateCost();
-//        this.nectarQuality = 1 / (double) this.costs;
-//        return this.nectarQuality;
-//    }
+    /**
+     * This function is the fitness function of the algorithm
+     *
+     * @param index iteration index of the algorithm
+     * @return fitness value of the solution
+     */
     public double calculateNectar(int index){
-            this.costs = calculateCandidateCost();
-            return this.costs +
-                    BeeColony.currentIndex() * BeeColony.getMaxItterations() * calculateCapactiyConstraint();
-        }
+        this.costs = calculateCandidateCost();
+        return this.costs + BeeColony.currentIndex() * BeeColony.getMaxItterations() * calculateCapactiyConstraint();
+    }
+
+    /**
+     * Given a set of nodes try and divvide them into trucks
+     * @param truckManager truck manager object
+     * @param nodeManager node manager objecy
+     * @return are these nodes feasible?
+     */
     private boolean sepearteToTrucks(TruckManager truckManager, NodeManager nodeManager) {
         ArrayList<Integer> path = new ArrayList<>();
         int cost = 0, j = 0;
@@ -82,10 +117,16 @@ public class CandidateSet {
         return true;
     }
 
+    /**
+     * given a range give random number between them
+     */
     private int randRange(int min, int max) {
         return rand.nextInt(max - min) + min;
     }
 
+    /**
+     * Shuffle the given array
+     */
     public int[] shuffle(int[] array) {
         int[] copyArray = Arrays.copyOf(array, array.length);
         for (int i = 0; i < copyArray.length; i++) {
@@ -94,12 +135,18 @@ public class CandidateSet {
         return copyArray;
     }
 
+    /**
+     * Swap elements in the array at the given indices
+     */
     private void swapAt(int i, int j, int[] array) {
         int temp = array[i];
         array[i] = array[j];
         array[j] = temp;
     }
 
+    /**
+     * swap members from diffrent trucks
+     */
     public void swap() {
         int first, second;
         do{
@@ -111,6 +158,9 @@ public class CandidateSet {
 
     }
 
+    /**
+     * This operator is used to generate a neighbour of a given solution
+     */
     public void BMX() {
 
         int best = Integer.MAX_VALUE;
@@ -127,6 +177,10 @@ public class CandidateSet {
 
     }
 
+    /**
+     * With the best path given create a neighbour
+     * @param bestPath best path in the node
+     */
     public void createPathWithBMX(Path bestPath){
         NodeManager nodeManager = CVRP.getNodeManager();
         TruckManager truckManager = CVRP.getTruckManager();
@@ -154,6 +208,10 @@ public class CandidateSet {
         this.pathsInCandidate[j] = new Path(path);
     }
 
+    /**
+     * Create a deep copy of the candidate set
+     * @return
+     */
     public CandidateSet deepCopy(){
         Path[] pathCopy = new Path[pathsInCandidate.length];
         for(int i = 0; i < pathsInCandidate.length; i++){
