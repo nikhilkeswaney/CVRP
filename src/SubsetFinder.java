@@ -1,9 +1,18 @@
 import java.util.ArrayList;
 
+/**
+ * This class implements the logic of actually finding the subset
+ */
 public class SubsetFinder {
 
 
-
+    /**
+     * This method implements the recurence relation of
+     * S(n, i) = K x S(n - 1, i) + S(n - 1, i - 1)
+     * @param n number of nodes
+     * @param k number of subsets to divide into
+     * @return all subsets of n after dividing them into k subsets
+     */
     public Subset finder(int n, int k){
 
         ArrayList<Subset> current = new ArrayList<Subset>();

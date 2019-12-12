@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * This class implemnets the tuple for travelling salesman
+ */
 class TravelingSalesmanTuple {
     private int cost;
     ArrayList<Integer> path = null;
@@ -9,13 +12,22 @@ class TravelingSalesmanTuple {
         path = new ArrayList<>();
     }
 
+    /**
+     * Add node to the path
+     * @param node node to add to the path
+     */
     public void addToPath(int node){
         path.add(node);
     }
 
+
+    /**
+     * GETTERS AND SETTERS
+     */
     public int getCost(){
         return this.cost;
     }
+
     public TravelingSalesmanTuple lessThanEqualTo(TravelingSalesmanTuple other){
         if(other.cost > this.cost){
             return this;

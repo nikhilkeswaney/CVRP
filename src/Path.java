@@ -1,6 +1,17 @@
+//******************************************************************************
+//
+//  File:    Path.java
+//  Author: Nikhil Haresh Keswaney
+//
+//  This file implements the all path functionalities
+//******************************************************************************
+
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * This file implements the all path functionalities
+ */
 public class Path {
     private ArrayList<Integer> path;
     private boolean valid;
@@ -22,12 +33,19 @@ public class Path {
         recalculateTheCostsAndDemands();
     }
 
+    /**
+     * Calculate the costs and demands to go through the path
+     */
     public void recalculateTheCostsAndDemands(){
         this.demand = calculateDemand();
         this.cost = calculateCost();
         setValid(this.demand <= this.truckManager.getCapacity());
     }
 
+    /**
+     * Calculate cost to go through that path
+     * @return cost of the path
+     */
     public int calculateCost() {
         int costTemp = 0;
         int from = 0;
@@ -39,6 +57,10 @@ public class Path {
         return costTemp;
     }
 
+    /**
+     * Calculate demand to go through that path
+     * @return demand of the path
+     */
     public int calculateDemand(){
         int sum = 0;
         for (int i: path){
@@ -46,11 +68,20 @@ public class Path {
         }
         return sum;
     }
+
+    /**
+     * Calculate if the demand fits the capacity
+     * @return demand fits the capacity
+     */
     public int calculatePathRequirements(){
 
         return calculateDemand() - truckManager.getCapacity();
     }
 
+    /**
+     * Exchange fustomers from paths
+     * @param path to exchange customer from
+     */
     public void exchange(Path path) {
         Random rand = new Random();
 
@@ -65,6 +96,9 @@ public class Path {
         path.recalculateTheCostsAndDemands();
     }
 
+    /**
+     * Deep copy of the path object
+     */
     public Path deepCopy(){
         Path copy = new Path();
         copy.setPath(new ArrayList<>(getPath()));

@@ -1,7 +1,18 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+//******************************************************************************
+//
+//  File:    Subset.java
+//  Author: Nikhil Haresh Keswaney
+//
+//  This file implments the functionality of dividing a given set of size n
+//  into k subsets (all that are possible)
+//******************************************************************************
 
+import java.util.ArrayList;
+
+/**
+ * This file implments the functionality of dividing a given set of size n
+ * into k subsets (all that are possible)
+ */
 public class Subset {
     private int sizeOfEachSubset = 0;
     private int capacity = 35;
@@ -10,6 +21,7 @@ public class Subset {
         this.sizeOfEachSubset = sizeOfEachSubset;
         subsets = new ArrayList<>();
     }
+
 
     public void oneSubset(int size){
         ArrayList<ArrayList<Integer>> subset = new ArrayList<>();
@@ -29,26 +41,30 @@ public class Subset {
         verifyAndAddtoSubsets(subset);
     }
 
+    /**
+     * Base case of the DP array where i = 0
+     * @param previousButSameK previous subset in the same row
+     * @param newElement New element to add
+     * @param k number of subsets to create
+     */
     public void topDP(Subset previousButSameK, int newElement, int k){
         ArrayList<ArrayList<ArrayList<Integer>>> subsetTocopy =
                 previousButSameK.getSubsets();
         for(ArrayList<ArrayList<Integer>> subset: subsetTocopy) {
             for (int i = 0; i < k; i++) {
                 ArrayList<ArrayList<Integer>> clonedSubset =  cloneSet(subset);
-//                subset.get(i).add(newElement);
-//                boolean validity = verifyPath(subset.get(i));
-//                subset.get(i).remove(subset.get(i).size() - 1);
-//                if(validity){
-//                    ArrayList<ArrayList<Integer>> clonedSubset = cloneSet(subset.get(i));
-//                }
-//                else {
-//                    break;
-//                }
                 clonedSubset.get(i).add(newElement);
                 verifyAndAddtoSubsets(clonedSubset);
             }
         }
     }
+
+    /**
+     * Base case of the diagonal
+     * @param previousButdiffrentK previous subset in the same row
+     * @param newElement new element to add
+     * @param k number of subsets to create
+     */
     public void crossedDP(Subset previousButdiffrentK, int newElement, int k){
         ArrayList<ArrayList<ArrayList<Integer>>> subsetTocopy =
                 previousButdiffrentK.getSubsets();
@@ -61,6 +77,11 @@ public class Subset {
             verifyAndAddtoSubsets(clonedSubset);
         }
     }
+
+    /**
+     * To add to subsets
+     * @param subset subset to add
+     */
     public void verifyAndAddtoSubsets(ArrayList<ArrayList<Integer>> subset){
         for (ArrayList<Integer> path: subset){
             if (!CVRP.getTruckManager().validity(path)){
@@ -71,7 +92,11 @@ public class Subset {
     }
 
 
-
+    /**
+     * Clone the set
+     * @param set set to colne
+     * @return
+     */
     public ArrayList<ArrayList<Integer>> cloneSet(ArrayList<ArrayList<Integer>> set) {
         ArrayList<ArrayList<Integer>> clonedSet = new ArrayList<>();
         ArrayList<Integer> inside;
@@ -82,6 +107,11 @@ public class Subset {
         return clonedSet;
     }
 
+
+    /**
+     * Clone subset
+     * @return colned subset
+     */
     public ArrayList<ArrayList<ArrayList<Integer>>> clone(){
 
         ArrayList<ArrayList<ArrayList<Integer>>> cloneArray = new ArrayList<>();
@@ -100,11 +130,13 @@ public class Subset {
         return cloneArray;
     }
 
+
+    /**
+     * GETTERS AND SETTERS
+     */
     public int getSizeOfEachSubset() {
         return sizeOfEachSubset;
     }
-
-
 
     public ArrayList<ArrayList<ArrayList<Integer>>> getSubsets() {
         return subsets;
