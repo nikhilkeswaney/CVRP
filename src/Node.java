@@ -1,3 +1,6 @@
+/**
+ * This class represents the colcation of the customers
+ */
 public class Node {
     private int MAX_CORD = 3;
     private int x, y, z;

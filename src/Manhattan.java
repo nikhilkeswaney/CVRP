@@ -1,3 +1,6 @@
+/**
+ * Manhattan implementation of distance metric
+ */
 public class Manhattan implements DistanceMetric{
     @Override
     public int distance(Node from, Node to) {

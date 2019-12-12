@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+
+/**
+ * This class implements the tracelling salesman algorithm
+ */
 public class TravelingSalesman {
     public TravelingSalesmanTuple tspMinCostBackTracking(ArrayList<Integer> nodesToVisit,
                                                          int size,

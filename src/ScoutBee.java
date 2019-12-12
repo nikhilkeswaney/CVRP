@@ -60,23 +60,6 @@ public class ScoutBee {
         return possibleFoodSourses;
     }
 
-//    @Override
-//    public void main(String[] strings) throws Exception {
-//        this.possibleFoodSourses = new Queue<>();
-//        this.queueSize = Integer.parseInt(strings[0]);
-//        initializeNode();
-//        allFlyandFindFoodSource();
-//    }
-//
-//    public void allFlyandFindFoodSource(){
-//        parallelFor(0, queueSize).exec(new Loop() {
-//            @Override
-//            public void run(int i) throws Exception {
-//                CandidateSet c = new CandidateSet(nodes);
-//                possibleFoodSourses.push(c);
-//            }
-//        });
-//    }
 
     public void checkAdRefill() {
         if(getQueueSize() < queueSize){

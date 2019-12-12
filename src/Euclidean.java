@@ -1,3 +1,6 @@
+/**
+ * Eucledian implementation of distance metric
+ */
 public class Euclidean implements DistanceMetric{
     @Override
     public int distance(Node from, Node to) {

@@ -1,6 +1,16 @@
-import java.util.Arrays;
+//******************************************************************************
+//
+//  File:    NodeManager.java
+//  Author: Nikhil Haresh Keswaney
+//
+//  This file implements the node manager which is used to manage all the nodes
+//  in the whole search space
+//******************************************************************************
 import java.util.HashMap;
 
+/**
+ * This class manages all the nodes in the search space
+ */
 public class NodeManager {
 
     private Node[] nodes = null;
@@ -19,14 +29,10 @@ public class NodeManager {
         this.NodeRefrence = new HashMap<Integer, Node>();
     }
 
-    public DistanceMetric getDistanceMetric() {
-        return distanceMetric;
-    }
-
-    public int getNodeDistance(int from, int to){
-        return this.distanceBetweenNodes[from][to];
-    }
-
+    /**
+     * Given a set of cordinates create nodes
+     * @param cordinates cornidates of the nodes
+     */
     public void createNodes(String[] cordinates){
         for(String i: cordinates){
             String[] coord = i.strip().split(" ");
@@ -39,6 +45,9 @@ public class NodeManager {
         calculateDistanceForAllNodes();
     }
 
+    /**
+     * Find the distance of all nodes with one another
+     */
     private void calculateDistanceForAllNodes() {
         for (int i = 0; i < nodes.length; i++){
             for (int j = 0; j <= i; j++){
@@ -54,6 +63,10 @@ public class NodeManager {
         }
     }
 
+    /**
+     * Given nodes set their individual demanands
+     * @param demands
+     */
     public void setDemands(String[] demands){
         for(String i: demands){
             String[] demand = i.strip().split(" ");
@@ -63,6 +76,9 @@ public class NodeManager {
         }
     }
 
+    /**
+     * Getters and setters
+     */
     public int getDemand(int nodeNumber){
         return nodes[nodeNumber].getDemand();
     }
@@ -106,5 +122,13 @@ public class NodeManager {
 
     public int getNodeSize(){
         return nodes.length;
+    }
+
+    public DistanceMetric getDistanceMetric() {
+        return distanceMetric;
+    }
+
+    public int getNodeDistance(int from, int to){
+        return this.distanceBetweenNodes[from][to];
     }
 }

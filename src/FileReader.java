@@ -1,12 +1,28 @@
+//******************************************************************************
+//
+//  File:    FileReader.java
+//  Author: Nikhil Haresh Keswaney
+//
+//  This file is a file reader and initializes elements in the CVRP class
+//******************************************************************************
 import java.io.BufferedReader;
 import java.io.IOException;
 
+/**
+ * File reader for Branchandcut.org CVRP data set
+ */
 public class FileReader {
     private static EgdeType egdeType;
     public String dataSet;
+
     public FileReader(String dataset){
         this.dataSet = dataset;
     }
+
+    /**
+     * Read the file and create managers trucks nodes acoordingly
+     * @throws IOException
+     */
     public void readFile() throws IOException {
         String currentLine;
         int size = 0;
@@ -70,6 +86,7 @@ public class FileReader {
         CVRP.getNodeManager().setTruckManager(CVRP.getTruckManager());
         CVRP.getTruckManager().setNodeManager(CVRP.getNodeManager());
     }
+
 
     public static String[] getChunk(BufferedReader objReader, int size) throws IOException {
         String currentLine;

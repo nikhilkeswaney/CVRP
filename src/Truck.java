@@ -1,3 +1,6 @@
+/**
+ * This class represnts the truck delevering the goods
+ */
 public class Truck {
     private int capacity;
     public Truck(int capacity){

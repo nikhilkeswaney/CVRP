@@ -1,3 +1,6 @@
+/**
+ * L_{Infinity} implementation of distance metric
+ */
 public class Max implements DistanceMetric{
     @Override
     public int distance(Node from, Node to) {
