@@ -17,8 +17,6 @@
 import edu.rit.pj2.Loop;
 import edu.rit.pj2.Task;
 import edu.rit.pj2.vbl.IntVbl;
-
-import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -29,34 +27,36 @@ public class CVRP extends Task {
     private static NodeManager nodeManager = null;
     private static TruckManager truckManager = null;
     private static int optimalValue = 0;
-
     private ScoutBee scoutBee;
     private EmployeedBees[] employeedBees;
-    private static int MAX_ITTERATIONS = 1500, INDEX = 1;
     private int swarmSize;
     private EmployeedBees bestSet;
     private int bestAns = Integer.MAX_VALUE;
     private OnlookerBee[] onlookerBees;
+
+    /**
+     * Main Function
+     */
     public void main(String[] args) throws Exception {
         if(args.length < 2) {
             usage();
             return;
         }
 
+        String dataSet = args[0];
+        String algorithm = args[1];
         try {
             swarmSize = Integer.parseInt(args[2]);
         }
         catch (Exception e){
             swarmSize = 1000;
+
         }
 
-        String dataSet = args[0];
-
-
-        String algorithm = args[1];
         if(!algorithm.equals("Exact")
-                &&  !algorithm.equals("ApproximateSequential")
-                && !algorithm.equals("ApproximateParallel")){
+            &&  !algorithm.equals("ApproximateSequential")
+            && !algorithm.equals("ApproximateParallel")
+        ){
             usage();
             return;
         }
@@ -107,7 +107,7 @@ public class CVRP extends Task {
 
             EmployeedBees.TRIAL_MAX = (int) (0.5 * swarmSize * CVRP.getTruckManager().getNumberOfTrucks());
 
-            while (currentIndex() < MAX_ITTERATIONS){
+            while (BeeColony.currentIndex() < BeeColony.getMaxItterations()){
                 IntVbl totalMaxCost = new IntVbl.Sum(0);
 
                 // Employeed bee phase
@@ -132,7 +132,6 @@ public class CVRP extends Task {
 
                 Random rand = new Random();
 
-                // onlooker bee phase
                 parallelFor(0, (int)(swarmSize / 2) - 1).exec(new Loop() {
                     @Override
                     public void run(int i) throws Exception {
@@ -166,42 +165,57 @@ public class CVRP extends Task {
                     }
                 });
 
-                incrementIndex();
+                BeeColony.incrementIndex();
             }
             bestSet.printTrucksandCost();
         }
     }
 
+    /**
+     * This function gives the Truck Manager to other classes
+     * @return truck manager
+     */
     public static TruckManager getTruckManager() {
         return truckManager;
     }
 
-
+    /**
+     * This function gives the Truck Manager to other classes
+     * @return truck manager
+     */
     public static void setTruckManager(TruckManager truckManager) {
         CVRP.truckManager = truckManager;
     }
 
+    /**
+     * This function provides the node manager to all the classes
+     * @return node manager
+     */
     public static NodeManager getNodeManager() {
         return nodeManager;
     }
 
+    /**
+     * This function is used to set the node manager
+     * @param nodeManager
+     */
     public static void setNodeManager(NodeManager nodeManager) {
         CVRP.nodeManager = nodeManager;
     }
 
-    public static int getOptimalValue() {
-        return optimalValue;
-    }
 
+    /**
+     * This function is used to set the optimal value
+     * @param optimalValue
+     */
     public static void setOptimalValue(int optimalValue) {
         CVRP.optimalValue = optimalValue;
     }
 
-    private static void usage() {
-        System.out.println("Usage: java CVRP <dataset>");
-        System.out.println("1. <dataset> The dataset you want to use");
-    }
-
+    /**
+     * This function is used to create a roullete wheel for the parallel algorithm
+     * @param totalCost total cost for all thrucks
+     */
     public void createRoulleteWheel(int totalCost){
         double totalMaxCost = 0;
 
@@ -216,25 +230,14 @@ public class CVRP extends Task {
             start = employeedBees[i].makeRange(start, totalMaxCost);
         }
     }
-    public static int currentIndex() {
-        return INDEX;
-    }
 
-    public static void incrementIndex() {
-        INDEX++;
-    }
-    public int bestCost(){
-        return bestSet.getBestCost();
-    }
 
-    public void printAns(){
-        bestSet.printTrucksandCost();
+    private static void usage() {
+        System.out.println("Usage: java pj2 cores=[Optional: number_of_cores] CVRP <dataset> <algorithm> <Optional: swarm_size>");
+        System.out.println("1. <dataset> The dataset you want to use");
+        System.out.println("2. <algorithm> Exact | ApproximateSequential | ApproximateParallel");
+        System.out.println("3. <Optional: swarm_size> swarm size(Default: 1000)");
     }
-
-    public static synchronized int getMaxItterations() {
-        return MAX_ITTERATIONS;
-    }
-
 
     protected static int coresRequired()
     {

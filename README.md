@@ -33,5 +33,8 @@ Note: This jar file needs to be added to the $CLASSPATH
 # Program input output
 
 ```
-java pj2 CVRP tracker=None cores=<no_of_cores> dataset=<relative_path_for_dataset> algorithm=<exact/approximate> parallel=<yes/no> swarm_size=<number_of_bees_to_employee(max = Integer.MAX_VALUE)>
+java pj2 cores=[Optional: number_of_cores] CVRP <dataset> <algorithm> <Optional: swarm_size>
+1. <dataset> The dataset you want to use
+2. <algorithm> Exact | ApproximateSequential | ApproximateParallel
+3. <Optional: swarm_size> swarm size(Default: 1000)
 ```
