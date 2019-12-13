@@ -14,12 +14,12 @@
 //
 //  Note: This file has a dependency of PJ2 library to run.
 //******************************************************************************
-
 import edu.rit.pj2.Loop;
 import edu.rit.pj2.Task;
 import edu.rit.pj2.vbl.IntVbl;
-import java.util.Random;
 
+import java.io.IOException;
+import java.util.Random;
 
 /**
  * This is the main class for the CVRP.
@@ -29,95 +29,68 @@ public class CVRP extends Task {
     private static NodeManager nodeManager = null;
     private static TruckManager truckManager = null;
     private static int optimalValue = 0;
+
     private ScoutBee scoutBee;
     private EmployeedBees[] employeedBees;
-    private int swarmSize = 1000;
+    private static int MAX_ITTERATIONS = 1500, INDEX = 1;
+    private int swarmSize;
     private EmployeedBees bestSet;
     private int bestAns = Integer.MAX_VALUE;
     private OnlookerBee[] onlookerBees;
-    private static int MAX_ITTERATIONS = 1500, INDEX = 1;
-    /**
-     * Main Function
-     */
     public void main(String[] args) throws Exception {
-        if(args.length < 1) {
-            usage();
-            return;
-        }
-        String dataSet = null;
-        String algorithm = null, parallel = null;
-        for (int i = 0; i < args.length; i++){
-            String[] split = args[i].split("=");
-            String flag, value;
-            try {
-                flag = split[0];
-                value = split[1];
-            }
-            catch (Exception e){
-                usage();
-                return;
-            }
-            switch (flag){
-                case "dataset":{
-                    dataSet = value;
-                    break;
-                }
-                case "algorithm":{
-                    if(!value.equals("exact") && !value.equals("approximate")){
-                        usage();
-                        return;
-                    }
-                    algorithm = value;
-                    break;
-                }
-                case "parallel":{
-                    if(!value.equals("yes") && !value.equals("no")){
-                        usage();
-                        return;
-                    }
-                    parallel = value;
-                    break;
-                }
-                case "swarm_size":{
-                    int temp;
-                    try {
-                        temp = Integer.parseInt(value);
-                    }
-                    catch (Exception e){
-                        usage();
-                        return;
-                    }
-                    swarmSize = temp;
-                    break;
-                }
-            }
-        }
-
-        FileReader f = new FileReader(dataSet);
-        f.readFile();
-
-        if(
-                algorithm == null ||
-                (algorithm.equals("approximate") && parallel == null) ||
-                swarmSize <= 0
-            ){
+        if(args.length < 2) {
             usage();
             return;
         }
 
+        try {
+            swarmSize = Integer.parseInt(args[2]);
+        }
+        catch (Exception e){
+            swarmSize = 1000;
+        }
 
-        if (algorithm.equals("exact")) {
+        String dataSet = args[0];
+
+
+        String algorithm = args[1];
+        if(!algorithm.equals("Exact")
+                &&  !algorithm.equals("ApproximateSequential")
+                && !algorithm.equals("ApproximateParallel")){
+            usage();
+            return;
+        }
+
+        try {
+            FileReader f = new FileReader(dataSet);
+            f.readFile();
+        }
+        catch (Exception e){
+            usage();
+            return;
+        }
+
+        try {
+            swarmSize = Integer.parseInt(args[2]);
+        }
+        catch (Exception e){
+            swarmSize = 1000;
+        }
+
+
+        if (algorithm.equals("Exact")) {
             ExactAlgorithm ea = new ExactAlgorithm();
             ea.start();
             ea.printBestRoutes();
         }
-        else if(algorithm.equals("approximate") && parallel.equals("no")) {
+
+        else if(algorithm.equals("ApproximateSequential")) {
             BeeColony beeColony = new BeeColony();
             beeColony.setSwarmSize(swarmSize);
             beeColony.startCollectingFood();
-
             beeColony.printAns();
         }
+
         else {
             employeedBees = new EmployeedBees[swarmSize / 2];
             onlookerBees = new OnlookerBee[swarmSize / 2];
@@ -134,7 +107,7 @@ public class CVRP extends Task {
 
             EmployeedBees.TRIAL_MAX = (int) (0.5 * swarmSize * CVRP.getTruckManager().getNumberOfTrucks());
 
-            while (BeeColony.currentIndex() < BeeColony.getMaxItterations()){
+            while (currentIndex() < MAX_ITTERATIONS){
                 IntVbl totalMaxCost = new IntVbl.Sum(0);
 
                 // Employeed bee phase
@@ -193,55 +166,42 @@ public class CVRP extends Task {
                     }
                 });
 
-                BeeColony.incrementIndex();
+                incrementIndex();
             }
+            bestSet.printTrucksandCost();
         }
     }
 
-    /**
-     * This function gives the Truck Manager to other classes
-     * @return truck manager
-     */
     public static TruckManager getTruckManager() {
         return truckManager;
     }
 
-    /**
-     * This function sets the truck manager
-     * @param truckManager
-     */
+
     public static void setTruckManager(TruckManager truckManager) {
         CVRP.truckManager = truckManager;
     }
 
-    /**
-     * This function provides the node manager to all the classes
-     * @return node manager
-     */
     public static NodeManager getNodeManager() {
         return nodeManager;
     }
 
-    /**
-     * This function is used to set the node manager
-     * @param nodeManager
-     */
     public static void setNodeManager(NodeManager nodeManager) {
         CVRP.nodeManager = nodeManager;
     }
 
-    /**
-     * This function is used to set the optimal value
-     * @param optimalValue
-     */
+    public static int getOptimalValue() {
+        return optimalValue;
+    }
+
     public static void setOptimalValue(int optimalValue) {
         CVRP.optimalValue = optimalValue;
     }
 
-    /**
-     * This function is used to create a roullete wheel for the parallel algorithm
-     * @param totalCost total cost for all thrucks
-     */
+    private static void usage() {
+        System.out.println("Usage: java CVRP <dataset>");
+        System.out.println("1. <dataset> The dataset you want to use");
+    }
+
     public void createRoulleteWheel(int totalCost){
         double totalMaxCost = 0;
 
@@ -256,13 +216,28 @@ public class CVRP extends Task {
             start = employeedBees[i].makeRange(start, totalMaxCost);
         }
     }
-
-
-    protected static int coresRequired(){
-        return 1;
+    public static int currentIndex() {
+        return INDEX;
     }
 
-    private static void usage() {
-        System.out.println("Usage: java pj2 CVRP tracker=None cores=<no_of_cores> dataset=<relative_path_for_dataset> algorithm=<exact/approximate> parallel=<yes/no> swarm_size=<number_of_bees_to_employee(max = Integer.MAX_VALUE)>");
+    public static void incrementIndex() {
+        INDEX++;
+    }
+    public int bestCost(){
+        return bestSet.getBestCost();
+    }
+
+    public void printAns(){
+        bestSet.printTrucksandCost();
+    }
+
+    public static synchronized int getMaxItterations() {
+        return MAX_ITTERATIONS;
+    }
+
+
+    protected static int coresRequired()
+    {
+        return 1;
     }
 }
