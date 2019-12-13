@@ -91,6 +91,10 @@ public class CVRP extends Task {
             beeColony.printAns();
         }
 
+        /*
+         * Wanted to implement this part in a seperate class but PJ2 doesn't allow
+         * implementation of parallel parts outside the main function
+         */
         else {
             employeedBees = new EmployeedBees[swarmSize / 2];
             onlookerBees = new OnlookerBee[swarmSize / 2];
