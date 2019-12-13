@@ -35,7 +35,7 @@ public class CVRP extends Task {
     private EmployeedBees bestSet;
     private int bestAns = Integer.MAX_VALUE;
     private OnlookerBee[] onlookerBees;
-
+    private static int MAX_ITTERATIONS = 1500, INDEX = 1;
     /**
      * Main Function
      */
@@ -123,7 +123,7 @@ public class CVRP extends Task {
             onlookerBees = new OnlookerBee[swarmSize / 2];
             scoutBee = new ScoutBee(swarmSize / 2);
 
-            // assign neighbourhood solution to all employeed bees
+
             parallelFor(0, (int) (swarmSize / 2) - 1).exec(new Loop() {
                 @Override
                 public void run(int i) throws Exception {
@@ -134,11 +134,10 @@ public class CVRP extends Task {
 
             EmployeedBees.TRIAL_MAX = (int) (0.5 * swarmSize * CVRP.getTruckManager().getNumberOfTrucks());
 
-
             while (BeeColony.currentIndex() < BeeColony.getMaxItterations()){
                 IntVbl totalMaxCost = new IntVbl.Sum(0);
 
-                // Employeed bee phase where they go out and find better solutions
+                // Employeed bee phase
                 parallelFor(0, (int) (swarmSize/2) - 1).exec(new Loop() {
                     IntVbl localTotalMaxCost;
 
@@ -156,15 +155,21 @@ public class CVRP extends Task {
                     }
                 });
 
-                // create roulete wheel for onlooker bees
                 createRoulleteWheel(totalMaxCost.item);
 
-                // using roullete wheel select the neighbourhood
-                for (int i = 0; i < (int) swarmSize / 2; i++) {
-                    onlookerBees[i] = new OnlookerBee(employeedBees, new Random());
+                Random rand = new Random();
 
-                    onlookerBees[i].sendOnlookerBees();
+                // onlooker bee phase
+                parallelFor(0, (int)(swarmSize / 2) - 1).exec(new Loop() {
+                    @Override
+                    public void run(int i) throws Exception {
+                        onlookerBees[i] = new OnlookerBee(employeedBees, rand);
+                        onlookerBees[i].sendAllOnlookerBees();
+                    }
+                });
 
+                for (OnlookerBee onlookerBee: onlookerBees){
+                    onlookerBee.reduceCopy();
                 }
 
                 scoutBee.checkAdRefill();
@@ -177,7 +182,7 @@ public class CVRP extends Task {
                     }
                 }
 
-                // If some answer is exhausted use scout bee to reffil
+
                 parallelFor(0, (int)(swarmSize / 2) - 1).exec(new Loop() {
 
                     @Override
@@ -190,18 +195,8 @@ public class CVRP extends Task {
 
                 BeeColony.incrementIndex();
             }
-            bestSet.printTrucksandCost();
         }
     }
-
-//    /**
-//     * Function that implements the bee colony in parallel (I wanted to
-//     * implement it in another class but PJ2 acts wierd if we implement parallel
-//     * function in another class that is not main class)
-//     */
-//    public void beeColonyParallel(){
-//
-//    }
 
     /**
      * This function gives the Truck Manager to other classes
